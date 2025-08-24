@@ -10,7 +10,8 @@ import {
   MapPin,
   ArrowRight
 } from 'lucide-react'
-import { getActiveCourses, getUpcomingSessions } from '@/lib/data/courses'
+import { CourseRepository } from '@/lib/repositories/courseRepository'
+import { SessionRepository } from '@/lib/repositories/courseRepository'
 
 export const metadata: Metadata = {
   title: 'Training Courses - ElevateCopilot',
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
 }
 
 const CoursesPage = async () => {
-  const courses = getActiveCourses()
-  const upcomingSessions = getUpcomingSessions()
+  const courses = CourseRepository.getActiveCourses()
+const upcomingSessions = SessionRepository.getUpcomingSessions()
 
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {

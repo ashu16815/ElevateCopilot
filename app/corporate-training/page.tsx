@@ -1,17 +1,78 @@
-import { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import { Building, Users, Award, CheckCircle, ArrowRight, Mail, Phone, Globe } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Corporate Training - ElevateCopilot',
-  description: 'Tailored Copilot enablement for your organization. Executive briefings, team workshops, and governance packages for maximum ROI.',
-}
-
 const CorporateTrainingPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    headcount: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitResult, setSubmitResult] = useState('')
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitResult('Sending...')
+
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('name', formData.name)
+      formDataToSend.append('email', formData.email)
+      formDataToSend.append('phone', formData.phone || 'Not provided')
+      formDataToSend.append('company', formData.company)
+      formDataToSend.append('headcount', formData.headcount)
+      formDataToSend.append('message', formData.message)
+      formDataToSend.append('access_key', 'be6ff4a1-4ba7-45b1-ba03-4b1137ca0574')
+      formDataToSend.append('subject', `Corporate Training Inquiry: ${formData.company} - ${formData.name}`)
+      formDataToSend.append('to', 'elevatecopilot@outlook.com')
+      formDataToSend.append('from_name', 'ElevateCopilot Corporate Training Form')
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      })
+      const data = await response.json()
+
+      if (data.success) {
+        setSubmitResult('Thank you for your inquiry! We will get back to you within 24 hours.')
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          headcount: '',
+          message: ''
+        })
+      } else {
+        console.error('Error submitting form:', data)
+        setSubmitResult('There was an error submitting your inquiry. Please try again or contact us directly.')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitResult('There was an error submitting your inquiry. Please try again or contact us directly.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   const packages = [
     {
       title: "Executive Briefing",
-      price: "From $1,500",
       desc: "90-min session for leadership teams.",
       duration: "90 minutes",
       audience: "C-Suite & Directors",
@@ -24,7 +85,6 @@ const CorporateTrainingPage = () => {
     },
     {
       title: "Team Workshop",
-      price: "From $4,000",
       desc: "Hands-on enablement for teams of up to 20.",
       duration: "Full day",
       audience: "Knowledge Workers",
@@ -37,7 +97,6 @@ const CorporateTrainingPage = () => {
     },
     {
       title: "Governance & Adoption Pack",
-      price: "POA",
       desc: "Admin readiness, security, usage telemetry.",
       duration: "Ongoing",
       audience: "IT & HR Teams",
@@ -137,9 +196,7 @@ const CorporateTrainingPage = () => {
                   <h3 className="text-2xl font-bold text-primary mb-4 font-playfair">
                     {pkg.title}
                   </h3>
-                  <div className="text-3xl font-bold text-accent mb-2 font-playfair">
-                    {pkg.price}
-                  </div>
+
                   <p className="text-muted mb-4">
                     {pkg.desc}
                   </p>
@@ -253,7 +310,7 @@ const CorporateTrainingPage = () => {
             </p>
           </div>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
@@ -263,6 +320,8 @@ const CorporateTrainingPage = () => {
                   type="text"
                   id="name"
                   name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
@@ -275,6 +334,8 @@ const CorporateTrainingPage = () => {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
@@ -290,6 +351,8 @@ const CorporateTrainingPage = () => {
                   type="tel"
                   id="phone"
                   name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
               </div>
@@ -301,6 +364,8 @@ const CorporateTrainingPage = () => {
                   type="text"
                   id="company"
                   name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
@@ -314,6 +379,8 @@ const CorporateTrainingPage = () => {
               <select
                 id="headcount"
                 name="headcount"
+                value={formData.headcount}
+                onChange={handleInputChange}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
               >
@@ -333,18 +400,33 @@ const CorporateTrainingPage = () => {
                 id="message"
                 name="message"
                 rows={4}
+                value={formData.message}
+                onChange={handleInputChange}
                 required
                 placeholder="Tell us about your training needs, goals, and any specific requirements..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
               ></textarea>
             </div>
             
+            {submitResult && (
+              <div className={`text-center p-4 rounded-lg ${
+                submitResult.includes('Thank you') 
+                  ? 'bg-green-100 text-green-800' 
+                  : submitResult.includes('error') 
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-blue-100 text-blue-800'
+              }`}>
+                {submitResult}
+              </div>
+            )}
+            
             <div className="text-center">
               <button
                 type="submit"
-                className="btn-primary px-12 py-4 text-lg"
+                disabled={isSubmitting}
+                className="btn-primary px-12 py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Submit Enquiry
+                {isSubmitting ? 'Sending...' : 'Submit Enquiry'}
               </button>
             </div>
           </form>
