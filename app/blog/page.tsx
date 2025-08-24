@@ -1,12 +1,8 @@
-import { Metadata } from 'next'
+'use client'
+
 import Link from 'next/link'
 import { ArrowLeft, ExternalLink, Clock, TrendingUp, Users, Search, Tag, Calendar, User } from 'lucide-react'
-
-export const metadata: Metadata = {
-  title: 'Blog - ElevateCopilot',
-  description: 'Evidence-based insights on Microsoft Copilot ROI, productivity gains, and adoption strategies. Research-backed articles for leaders and practitioners.',
-  keywords: ['Copilot ROI', 'productivity gains', 'AI adoption', 'Microsoft 365', 'workplace AI'],
-}
+import { useState, useMemo } from 'react'
 
 const blogPosts = [
   {
@@ -36,7 +32,7 @@ const blogPosts = [
     icon: TrendingUp,
     color: 'bg-blue-100 text-blue-800',
     tags: ['Consulting', 'Prompts', 'Productivity', 'Microsoft 365'],
-    date: '2025-08-25',
+    date: '2024-12-15',
     author: 'ElevateCopilot Editorial Team'
   },
   {
@@ -66,7 +62,7 @@ const blogPosts = [
     icon: TrendingUp,
     color: 'bg-green-100 text-green-800',
     tags: ['Finance', 'ROI', 'Microsoft 365', 'Productivity'],
-    date: '2025-08-25',
+    date: '2024-12-10',
     author: 'ElevateCopilot Editorial Team'
   },
   {
@@ -96,7 +92,7 @@ const blogPosts = [
     icon: Users,
     color: 'bg-purple-100 text-purple-800',
     tags: ['Comparison', 'Microsoft 365', 'ChatGPT', 'Productivity'],
-    date: '2025-08-25',
+    date: '2024-12-05',
     author: 'ElevateCopilot Editorial Team'
   },
   {
@@ -126,7 +122,7 @@ const blogPosts = [
     icon: TrendingUp,
     color: 'bg-green-100 text-green-800',
     tags: ['AI Adoption', 'Career Growth', 'Productivity', 'Microsoft Copilot'],
-    date: '2025-08-24',
+    date: '2024-11-28',
     author: 'ElevateCopilot Editorial Team'
   },
   {
@@ -150,7 +146,7 @@ const blogPosts = [
     icon: Clock,
     color: 'bg-blue-100 text-blue-800',
     tags: ['Time Savings', 'Productivity', 'Research', 'Microsoft Copilot'],
-    date: '2025-08-23',
+    date: '2024-11-20',
     author: 'ElevateCopilot Editorial Team'
   },
   {
@@ -174,7 +170,7 @@ const blogPosts = [
     icon: TrendingUp,
     color: 'bg-green-100 text-green-800',
     tags: ['ROI', 'Leadership', 'Business Case', 'Microsoft Copilot'],
-    date: '2025-08-22',
+    date: '2024-11-15',
     author: 'ElevateCopilot Editorial Team'
   },
   {
@@ -198,15 +194,47 @@ const blogPosts = [
     icon: Users,
     color: 'bg-purple-100 text-purple-800',
     tags: ['User Experience', 'Adoption', 'Productivity', 'Microsoft Copilot'],
-    date: '2025-08-21',
+    date: '2024-11-08',
     author: 'ElevateCopilot Editorial Team'
   }
 ]
 
 // Get all unique tags
-const allTags = [...new Set(blogPosts.flatMap(post => post.tags))]
+const allTags = Array.from(new Set(blogPosts.flatMap(post => post.tags)))
 
 export default function BlogPage() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedTag, setSelectedTag] = useState('')
+
+  // Filter posts based on search and tag
+  const filteredPosts = useMemo(() => {
+    return blogPosts.filter(post => {
+      const matchesSearch = searchTerm === '' || 
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+      
+      const matchesTag = selectedTag === '' || post.tags.includes(selectedTag)
+      
+      return matchesSearch && matchesTag
+    })
+  }, [searchTerm, selectedTag])
+
+  // Get latest posts for sidebar
+  const latestPosts = blogPosts.slice(0, 6)
+  
+  // Get popular posts (showing different posts than latest)
+  const popularPosts = blogPosts.slice(1, 7)
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(selectedTag === tag ? '' : tag)
+  }
+
+  const clearFilters = () => {
+    setSearchTerm('')
+    setSelectedTag('')
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -238,8 +266,38 @@ export default function BlogPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content - Left Column */}
             <div className="lg:col-span-2">
+              {/* Search and Filter Results */}
+              {(searchTerm || selectedTag) && (
+                <div className="mb-8 bg-white rounded-2xl shadow-lg p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-primary">
+                      Search Results
+                      {searchTerm && (
+                        <span className="text-muted font-normal ml-2">
+                          for "{searchTerm}"
+                        </span>
+                      )}
+                      {selectedTag && (
+                        <span className="text-muted font-normal ml-2">
+                          in "{selectedTag}"
+                        </span>
+                      )}
+                    </h3>
+                    <button
+                      onClick={clearFilters}
+                      className="text-accent hover:text-accent/80 text-sm font-medium"
+                    >
+                      Clear Filters
+                    </button>
+                  </div>
+                  <p className="text-muted">
+                    Found {filteredPosts.length} article{filteredPosts.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              )}
+
               <div className="space-y-12">
-                {blogPosts.map((post, index) => (
+                {filteredPosts.map((post, index) => (
                   <article key={post.slug} className="bg-white rounded-2xl shadow-lg p-8">
                     {/* Post Header */}
                     <div className="flex items-start justify-between mb-6">
@@ -323,6 +381,22 @@ export default function BlogPage() {
                     </div>
                   </article>
                 ))}
+
+                {filteredPosts.length === 0 && (
+                  <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
+                    <div className="text-gray-400 text-6xl mb-4">🔍</div>
+                    <h3 className="text-xl font-semibold text-primary mb-2">No articles found</h3>
+                    <p className="text-muted mb-6">
+                      Try adjusting your search terms or clearing the filters
+                    </p>
+                    <button
+                      onClick={clearFilters}
+                      className="btn-primary px-6 py-2"
+                    >
+                      Clear Filters
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -338,6 +412,8 @@ export default function BlogPage() {
                   <input
                     type="text"
                     placeholder="Search insights..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   />
                 </div>
@@ -350,12 +426,17 @@ export default function BlogPage() {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {allTags.slice(0, 12).map((tag, index) => (
-                      <span
+                      <button
                         key={index}
-                        className="px-3 py-1 bg-accent/10 text-accent text-sm rounded-full cursor-pointer hover:bg-accent/20 transition-colors"
+                        onClick={() => handleTagClick(tag)}
+                        className={`px-3 py-1 text-sm rounded-full cursor-pointer transition-colors ${
+                          selectedTag === tag 
+                            ? 'bg-accent text-white' 
+                            : 'bg-accent/10 text-accent hover:bg-accent/20'
+                        }`}
                       >
                         {tag}
-                      </span>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -364,7 +445,7 @@ export default function BlogPage() {
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <h3 className="text-lg font-semibold text-primary mb-4">Latest</h3>
                   <div className="space-y-4">
-                    {blogPosts.slice(0, 6).map((post, index) => (
+                    {latestPosts.map((post, index) => (
                       <div key={post.slug} className="border-b border-gray-100 pb-3 last:border-b-0">
                         <h4 className="font-medium text-primary text-sm mb-2 line-clamp-2">
                           {post.title}
@@ -382,7 +463,7 @@ export default function BlogPage() {
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <h3 className="text-lg font-semibold text-primary mb-4">Popular</h3>
                   <div className="space-y-4">
-                    {blogPosts.slice(0, 6).map((post, index) => (
+                    {popularPosts.map((post, index) => (
                       <div key={post.slug} className="border-b border-gray-100 pb-3 last:border-b-0">
                         <h4 className="font-medium text-primary text-sm mb-2 line-clamp-2">
                           {post.title}
