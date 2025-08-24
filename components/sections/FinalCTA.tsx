@@ -5,7 +5,7 @@ interface FinalCTAProps {
   courseStats: {
     totalCourses: number
     totalEnrollments: number
-    upcomingSessions: number
+    upcomingSessions: string
     averagePrice: string
   }
 }
@@ -44,7 +44,7 @@ const FinalCTA = ({ courseStats }: FinalCTAProps) => {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Link
-            href="/schedule"
+            href="/courses"
             className="bg-accent hover:bg-accent/90 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center justify-center group"
           >
             See Upcoming Sessions

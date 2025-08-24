@@ -15,7 +15,7 @@ const CoursesManagementPage = () => {
   const [courseStats, setCourseStats] = useState({
     totalCourses: 0,
     totalEnrollments: 0,
-    upcomingSessions: 0,
+    upcomingSessions: "10+",
     averagePrice: ''
   })
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)

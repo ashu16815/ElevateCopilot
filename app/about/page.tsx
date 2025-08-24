@@ -31,7 +31,7 @@ const AboutPage = () => {
   ]
 
   const stats = [
-    { number: "500+", label: "Professionals Trained" },
+    { number: "600+", label: "Professionals Trained" },
     { number: "25+", label: "Countries Served" },
     { number: "95%", label: "Satisfaction Rate" },
     { number: "3+", label: "Years of Experience" }

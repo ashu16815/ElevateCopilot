@@ -100,6 +100,11 @@ export default async function CoursesPage() {
                   {/* Price */}
                   <div className="text-2xl font-extrabold leading-none text-slate-900 whitespace-nowrap">
                     NZ${course.price_nzd}
+                    {course.price_usd && (
+                      <span className="block text-sm font-normal text-muted mt-1">
+                        (~US${course.price_usd})
+                      </span>
+                    )}
                   </div>
                   
                   {/* CTA Button */}

@@ -4,6 +4,8 @@ export interface Course {
   title: string
   price_nzd: number
   price_private_nzd?: number
+  price_usd?: number
+  price_private_usd?: number
   duration: string
   mode: string
   level: string
@@ -41,6 +43,7 @@ export const defaultCourses: Course[] = [
     title: "Copilot Kickstart (90-min Masterclass)",
     price_nzd: 99,
     price_private_nzd: 99,
+    price_usd: 59,
     duration: "90 minutes",
     mode: "Live Online",
     level: "Beginner",
@@ -72,6 +75,7 @@ export const defaultCourses: Course[] = [
     title: "Copilot in M365 Deep Dive (Half-Day)",
     price_nzd: 199,
     price_private_nzd: 199,
+    price_usd: 119,
     duration: "3.5 hours",
     mode: "Live Online",
     level: "Intermediate",
@@ -103,6 +107,7 @@ export const defaultCourses: Course[] = [
     title: "Copilot Certification (Full-Day + Assessment)",
     price_nzd: 399,
     price_private_nzd: 399,
+    price_usd: 239,
     duration: "8 hours",
     mode: "Hybrid (Online + In-Person)",
     level: "Intermediate",
@@ -135,6 +140,8 @@ export const defaultCourses: Course[] = [
     title: "Executive Briefing: ROI, Risk & Rollout (90-min)",
     price_nzd: 199,
     price_private_nzd: 1499,
+    price_usd: 119,
+    price_private_usd: 899,
     duration: "90 minutes",
     mode: "Online or Private In-Person",
     level: "Leadership",

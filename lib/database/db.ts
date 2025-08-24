@@ -107,12 +107,14 @@ export function deleteCourse(id: number): boolean {
 export function getCourseStats() {
   const activeCourses = getActiveCourses()
   
-  return {
+  const courseStats = {
     totalCourses: activeCourses.length,
     totalEnrollments: 0, // No sessions anymore
-    upcomingSessions: 0, // No sessions anymore
+    upcomingSessions: "10+", // Updated to show 10+ sessions
     averagePrice: "NZ$249" // Updated to NZD
   }
+
+  return courseStats
 }
 
 // Session functions now return empty arrays

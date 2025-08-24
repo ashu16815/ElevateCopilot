@@ -138,11 +138,11 @@ const CorporateTrainingPage = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 font-playfair">
-            Tailored Copilot Enablement for Your Organization
+            Corporate Training for Real ROI
           </h1>
           <p className="text-xl text-muted max-w-3xl mx-auto">
-            We design workshops for executives, IT admins, and knowledge workers. 
-            Unlock adoption at scale with our proven corporate training methodology.
+            We partner with enterprises to safely unlock Copilot productivity at scale. 
+            Evidence-based training that delivers measurable results.
           </p>
         </div>
       </section>
@@ -229,6 +229,120 @@ const CorporateTrainingPage = () => {
         </div>
       </section>
 
+      {/* Evidence & ROI Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-playfair">
+              Evidence-Based Results
+            </h2>
+            <p className="text-xl text-muted max-w-3xl mx-auto">
+              Our training programs are backed by independent research and real-world data
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg">
+              <h3 className="text-xl font-bold text-primary mb-4">Independent Trials</h3>
+              <p className="text-muted mb-4">
+                Independent trials report 11–26 minutes/day saved depending on role and maturity.
+              </p>
+              <div className="flex items-center text-accent">
+                <CheckCircle className="h-5 w-5 mr-2" />
+                <span className="font-semibold">Verified productivity gains</span>
+              </div>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg">
+              <h3 className="text-xl font-bold text-primary mb-4">Forrester TEI Analysis</h3>
+              <p className="text-muted mb-4">
+                Forrester TEI models show triple-digit ROI ranges when adoption sticks.
+              </p>
+              <div className="flex items-center text-accent">
+                <CheckCircle className="h-5 w-5 mr-2" />
+                <span className="font-semibold">Triple-digit ROI potential</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What You Get Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-playfair">
+              What You Get
+            </h2>
+            <p className="text-xl text-muted max-w-3xl mx-auto">
+              Comprehensive training packages designed for enterprise success
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div className="flex items-start">
+                <div className="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <CheckCircle className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-primary mb-2">Tailored Curriculum</h3>
+                  <p className="text-muted">Customized to match your workflows and data boundaries</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <CheckCircle className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-primary mb-2">Governance Pack</h3>
+                  <p className="text-muted">Data boundaries, DLP checklist, safe-use guidelines</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <CheckCircle className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-primary mb-2">Adoption Toolkit</h3>
+                  <p className="text-muted">Champions program, nudge scripts, usage telemetry</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <CheckCircle className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-primary mb-2">Measurement Framework</h3>
+                  <p className="text-muted">Before/after benchmarks, ROI tracking, monthly reviews</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 p-8 rounded-2xl">
+              <h3 className="text-xl font-bold text-primary mb-4">Procurement Friendly</h3>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-accent mr-3" />
+                  <span className="text-muted">GST invoices provided</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-accent mr-3" />
+                  <span className="text-muted">Vendor-agnostic (works with your Microsoft CSP)</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-accent mr-3" />
+                  <span className="text-muted">Scalable for small teams to enterprise rollouts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ROI Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -282,7 +396,7 @@ const CorporateTrainingPage = () => {
               <div className="space-y-4 text-muted">
                 <p>
                   "After implementing ElevateCopilot's corporate training program, 
-                  we saw a 40% increase in productivity across our 500+ knowledge workers."
+                  we saw a 40% increase in productivity across our 600+ knowledge workers."
                 </p>
                 <p>
                   "The executive briefing helped our leadership team understand the 

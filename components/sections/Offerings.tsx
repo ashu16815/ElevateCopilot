@@ -93,6 +93,11 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
                   <div className="flex items-center text-sm text-muted">
                     <DollarSign className="h-4 w-4 mr-2" />
                     <span>NZ${course.price_nzd}</span>
+                    {course.price_usd && (
+                      <span className="text-xs text-muted ml-1">
+                        (~US${course.price_usd})
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -113,6 +118,11 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-primary">
                     NZ${course.price_nzd}
+                    {course.price_usd && (
+                      <span className="block text-sm font-normal text-muted mt-1">
+                        (~US${course.price_usd})
+                      </span>
+                    )}
                   </div>
                   <Link
                     href={course.cta.href}

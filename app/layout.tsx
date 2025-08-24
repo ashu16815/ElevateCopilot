@@ -29,13 +29,32 @@ export const metadata: Metadata = {
     siteName: 'ElevateCopilot',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/og-cover.png',
+        width: 1200,
+        height: 630,
+        alt: 'ElevateCopilot - Microsoft Copilot Training & Certification',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
     description: 'Premium Microsoft Copilot training & certification for professionals and teams worldwide.',
+    images: ['/og-cover.png'],
   },
   viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
@@ -45,6 +64,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#0F172A" />
+      </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
         <Header />
         <main className="min-h-screen">

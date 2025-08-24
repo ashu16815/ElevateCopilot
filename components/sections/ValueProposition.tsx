@@ -55,10 +55,8 @@ const ValueProposition = () => {
         {/* Stats Section */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="text-4xl md:text-5xl font-bold text-accent mb-2 font-playfair">
-              500+
-            </div>
-            <div className="text-muted">Professionals Trained</div>
+            <div className="text-3xl font-bold text-accent mb-2">600+</div>
+            <div className="text-sm text-muted">Professionals Trained</div>
           </div>
           <div className="text-center">
             <div className="text-4xl md:text-5xl font-bold text-accent mb-2 font-playfair">

@@ -4,6 +4,7 @@ import ValueProposition from '@/components/sections/ValueProposition'
 import Offerings from '@/components/sections/Offerings'
 import Certification from '@/components/sections/Certification'
 import Partnerships from '@/components/sections/Partnerships'
+import TrustSection from '@/components/sections/TrustSection'
 import Testimonials from '@/components/sections/Testimonials'
 import FinalCTA from '@/components/sections/FinalCTA'
 import { CourseRepository } from '@/lib/repositories/courseRepository'
@@ -37,6 +38,7 @@ export default async function Home() {
       <Offerings featuredCourses={featuredCourses} />
       <Certification />
       <Partnerships />
+      <TrustSection />
       <Testimonials />
       <FinalCTA courseStats={courseStats} />
     </main>
