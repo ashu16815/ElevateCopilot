@@ -9,6 +9,7 @@ const Footer = () => {
         { name: "Courses", href: "/courses" },
         { name: "Corporate Training", href: "/corporate-training" },
         { name: "Certification", href: "/certification" },
+        { name: "Resources", href: "/resources" },
         { name: "Blog", href: "/blog" },
       ]
     },
