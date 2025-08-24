@@ -11,8 +11,8 @@ const CreateCoursePage = () => {
   const [formData, setFormData] = useState({
     slug: '',
     title: '',
-    price_nzd: 0,
-    price_private_nzd: 0,
+    price_usd: 0,
+    price_private_usd: 0,
     duration: '',
     mode: '',
     level: '',
@@ -21,8 +21,8 @@ const CreateCoursePage = () => {
     takeaways: [''],
     cta_label: '',
     cta_href: '',
-    status: 'draft' as 'draft' | 'active' | 'archived',
-    visibility: 'public' as 'public' | 'private'
+    status: 'draft' as const,
+    visibility: 'public' as const
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -66,8 +66,8 @@ const CreateCoursePage = () => {
       const courseData = {
         slug: formData.slug,
         title: formData.title,
-        price_nzd: Number(formData.price_nzd),
-        price_private_nzd: formData.price_private_nzd > 0 ? Number(formData.price_private_nzd) : undefined,
+        price_usd: Number(formData.price_usd),
+        price_private_usd: formData.price_private_usd > 0 ? Number(formData.price_private_usd) : undefined,
         duration: formData.duration,
         mode: formData.mode,
         level: formData.level,
@@ -151,35 +151,37 @@ const CreateCoursePage = () => {
             </div>
 
             <div>
-              <label htmlFor="price_nzd" className="block text-sm font-medium text-primary mb-2">
-                Price (NZD) *
+              <label htmlFor="price_usd" className="block text-sm font-medium text-primary mb-2">
+                Price (USD) *
               </label>
               <input
                 type="number"
-                id="price_nzd"
-                name="price_nzd"
-                value={formData.price_nzd}
+                id="price_usd"
+                name="price_usd"
+                value={formData.price_usd}
                 onChange={handleInputChange}
                 required
                 min="0"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="99"
+                step="0.01"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                placeholder="Enter price in USD"
               />
             </div>
 
             <div>
-              <label htmlFor="price_private_nzd" className="block text-sm font-medium text-primary mb-2">
-                Private Price (NZD)
+              <label htmlFor="price_private_usd" className="block text-sm font-medium text-primary mb-2">
+                Private Price (USD)
               </label>
               <input
                 type="number"
-                id="price_private_nzd"
-                name="price_private_nzd"
-                value={formData.price_private_nzd}
+                id="price_private_usd"
+                name="price_private_usd"
+                value={formData.price_private_usd}
                 onChange={handleInputChange}
                 min="0"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="1499 (optional)"
+                step="0.01"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                placeholder="Enter private price in USD (optional)"
               />
             </div>
 

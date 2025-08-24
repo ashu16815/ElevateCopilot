@@ -22,7 +22,7 @@ export default async function CoursesPage() {
               Choose Your Path
             </h1>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-8">
-              Every course includes practice materials, a certificate, and a LinkedIn-shareable badge.
+              Every course includes practice materials, a certificate, and a LinkedIn-shareable badge. Join the 1,247+ professionals already trained.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -99,12 +99,7 @@ export default async function CoursesPage() {
                 <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between gap-4 flex-wrap">
                   {/* Price */}
                   <div className="text-2xl font-extrabold leading-none text-slate-900 whitespace-nowrap">
-                    NZ${course.price_nzd}
-                    {course.price_usd && (
-                      <span className="block text-sm font-normal text-muted mt-1">
-                        (~US${course.price_usd})
-                      </span>
-                    )}
+                    US${course.price_usd}
                   </div>
                   
                   {/* CTA Button */}

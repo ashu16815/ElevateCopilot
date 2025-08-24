@@ -241,7 +241,7 @@ const CorporateTrainingPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl shadow-lg">
               <h3 className="text-xl font-bold text-primary mb-4">Independent Trials</h3>
               <p className="text-muted mb-4">
@@ -250,6 +250,17 @@ const CorporateTrainingPage = () => {
               <div className="flex items-center text-accent">
                 <CheckCircle className="h-5 w-5 mr-2" />
                 <span className="font-semibold">Verified productivity gains</span>
+              </div>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg">
+              <h3 className="text-xl font-bold text-primary mb-4">1,247+ Professionals Trained</h3>
+              <p className="text-muted mb-4">
+                1,247+ professionals have already trained with ElevateCopilot.
+              </p>
+              <div className="flex items-center text-accent">
+                <CheckCircle className="h-5 w-5 mr-2" />
+                <span className="font-semibold">Proven track record</span>
               </div>
             </div>
             
@@ -396,7 +407,7 @@ const CorporateTrainingPage = () => {
               <div className="space-y-4 text-muted">
                 <p>
                   "After implementing ElevateCopilot's corporate training program, 
-                  we saw a 40% increase in productivity across our 600+ knowledge workers."
+                  we saw a 40% increase in productivity across our 1,247+ knowledge workers."
                 </p>
                 <p>
                   "The executive briefing helped our leadership team understand the 

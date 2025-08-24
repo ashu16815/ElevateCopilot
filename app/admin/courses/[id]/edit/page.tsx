@@ -15,8 +15,8 @@ const EditCoursePage = () => {
   const [formData, setFormData] = useState({
     slug: '',
     title: '',
-    price_nzd: 0,
-    price_private_nzd: 0,
+    price_usd: 0,
+    price_private_usd: 0,
     duration: '',
     mode: '',
     level: '',
@@ -37,8 +37,8 @@ const EditCoursePage = () => {
           setFormData({
             slug: course.slug,
             title: course.title,
-            price_nzd: course.price_nzd,
-            price_private_nzd: course.price_private_nzd || 0,
+            price_usd: course.price_usd,
+            price_private_usd: course.price_private_usd || 0,
             duration: course.duration,
             mode: course.mode,
             level: course.level,
@@ -106,8 +106,8 @@ const EditCoursePage = () => {
       const courseData = {
         slug: formData.slug,
         title: formData.title,
-        price_nzd: Number(formData.price_nzd),
-        price_private_nzd: formData.price_private_nzd > 0 ? Number(formData.price_private_nzd) : undefined,
+        price_usd: Number(formData.price_usd),
+        price_private_usd: formData.price_private_usd > 0 ? Number(formData.price_private_usd) : undefined,
         duration: formData.duration,
         mode: formData.mode,
         level: formData.level,
@@ -207,14 +207,14 @@ const EditCoursePage = () => {
             </div>
 
             <div>
-              <label htmlFor="price_nzd" className="block text-sm font-medium text-primary mb-2">
-                Price (NZD) *
+              <label htmlFor="price_usd" className="block text-sm font-medium text-primary mb-2">
+                Price (USD) *
               </label>
               <input
                 type="number"
-                id="price_nzd"
-                name="price_nzd"
-                value={formData.price_nzd}
+                id="price_usd"
+                name="price_usd"
+                value={formData.price_usd}
                 onChange={handleInputChange}
                 required
                 min="0"
@@ -224,14 +224,14 @@ const EditCoursePage = () => {
             </div>
 
             <div>
-              <label htmlFor="price_private_nzd" className="block text-sm font-medium text-primary mb-2">
-                Private Price (NZD)
+              <label htmlFor="price_private_usd" className="block text-sm font-medium text-primary mb-2">
+                Private Price (USD)
               </label>
               <input
                 type="number"
-                id="price_private_nzd"
-                name="price_private_nzd"
-                value={formData.price_private_nzd}
+                id="price_private_usd"
+                name="price_private_usd"
+                value={formData.price_private_usd}
                 onChange={handleInputChange}
                 min="0"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"

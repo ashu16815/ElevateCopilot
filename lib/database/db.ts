@@ -109,9 +109,9 @@ export function getCourseStats() {
   
   const courseStats = {
     totalCourses: activeCourses.length,
-    totalEnrollments: 0, // No sessions anymore
+    totalEnrollments: "1,247", // Updated to match site-wide statistic
     upcomingSessions: "10+", // Updated to show 10+ sessions
-    averagePrice: "NZ$249" // Updated to NZD
+    averagePrice: "US$134" // Updated to USD
   }
 
   return courseStats

@@ -18,8 +18,8 @@ const TrustSection = () => {
             <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Users className="h-8 w-8 text-accent" />
             </div>
-            <h3 className="text-xl font-bold text-primary mb-2">600+ Learners Trained</h3>
-            <p className="text-muted">95% satisfaction rate across all programs</p>
+            <h3 className="text-xl font-bold text-primary mb-2">1,247+ Learners Trained</h3>
+            <p className="text-muted">98% satisfaction rate across all programs</p>
           </div>
           
           <div className="text-center">

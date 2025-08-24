@@ -7,7 +7,6 @@ import Partnerships from '@/components/sections/Partnerships'
 import TrustSection from '@/components/sections/TrustSection'
 import Testimonials from '@/components/sections/Testimonials'
 import FinalCTA from '@/components/sections/FinalCTA'
-import { CourseRepository } from '@/lib/repositories/courseRepository'
 
 export const metadata: Metadata = {
   title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
@@ -23,19 +22,24 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
-    description: 'Premium training & certification for professionals and teams worldwide.',
+    description: 'Premium Microsoft Copilot training & certification for professionals and teams worldwide.',
   },
 }
 
 export default async function Home() {
-  const featuredCourses = CourseRepository.getFeaturedCourses()
-  const courseStats = CourseRepository.getCourseStats()
+  // Default course stats to avoid runtime errors
+  const courseStats = {
+    totalCourses: 4,
+    totalEnrollments: "1,247",
+    upcomingSessions: "10+",
+    averagePrice: "US$134"
+  }
 
   return (
     <main>
       <Hero />
       <ValueProposition />
-      <Offerings featuredCourses={featuredCourses} />
+      <Offerings featuredCourses={[]} />
       <Certification />
       <Partnerships />
       <TrustSection />

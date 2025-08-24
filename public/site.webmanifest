@@ -1,0 +1,16 @@
+{
+  "name": "ElevateCopilot",
+  "short_name": "ElevateCopilot",
+  "description": "Learn Copilot. Lead with AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml"
+    }
+  ]
+}

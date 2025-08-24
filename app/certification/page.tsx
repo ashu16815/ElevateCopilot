@@ -239,8 +239,8 @@ const CertificationPage = () => {
             <Link href="/courses#certification" className="btn-primary">
               View Certification Course
             </Link>
-            <Link href="/schedule" className="btn-secondary">
-              Check Schedule
+            <Link href="/contact" className="btn-secondary">
+              Contact Us
             </Link>
           </div>
         </div>

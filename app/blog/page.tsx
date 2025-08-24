@@ -10,6 +10,33 @@ export const metadata: Metadata = {
 
 const blogPosts = [
   {
+    slug: 'ai-career-earnings',
+    title: 'AI at Work: How Employees Are Earning More by Using It Effectively',
+    summary: 'Employees who adopt AI tools like Copilot are saving time, boosting their productivity, and increasing their earning potential. Studies show AI users advance faster and earn more.',
+    bullets: [
+      'LinkedIn Work Trend Index (2024): Employees who use AI daily are twice as likely to report career advancement and improved earning potential.',
+      'Harvard Business Review (2024): Early adopters of AI enjoy a productivity and promotion premium.',
+      'World Economic Forum (2023): By 2027, 44% of workers\' skills will be disrupted; those leveraging AI will benefit financially.',
+      'Employees using AI shift time from repetitive tasks to higher-value, revenue-driving work.'
+    ],
+    sources: [
+      {
+        url: 'https://www.microsoft.com/en-us/worklab/work-trend-index/copilots-earliest-users-teach-us-about-generative-ai-at-work',
+        title: 'Microsoft Work Trend Index: Copilot\'s Earliest Users'
+      },
+      {
+        url: 'https://hbr.org/2024/02/research-the-potential-productivity-gains-from-generative-ai',
+        title: 'Harvard Business Review: Research on Generative AI Productivity Gains'
+      },
+      {
+        url: 'https://www.weforum.org/reports/future-of-jobs-report-2023',
+        title: 'World Economic Forum: Future of Jobs Report 2023'
+      }
+    ],
+    icon: TrendingUp,
+    color: 'bg-green-100 text-green-800'
+  },
+  {
     slug: 'copilot-saves-time-how-much',
     title: 'Does Copilot Really Save Time? What the Evidence Says',
     summary: 'Independent trials show 11–26 minutes saved per day, depending on role and workflow maturity.',

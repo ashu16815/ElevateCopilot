@@ -14,7 +14,7 @@ const CoursesManagementPage = () => {
   const [statusFilter, setStatusFilter] = useState('')
   const [courseStats, setCourseStats] = useState({
     totalCourses: 0,
-    totalEnrollments: 0,
+    totalEnrollments: "1,247",
     upcomingSessions: "10+",
     averagePrice: ''
   })
@@ -314,7 +314,7 @@ const CoursesManagementPage = () => {
                       {course.mode}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      NZ${course.price_nzd}
+                      US${course.price_usd}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {course.duration}

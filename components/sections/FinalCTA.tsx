@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle, Star } from 'lucide-react'
 interface FinalCTAProps {
   courseStats: {
     totalCourses: number
-    totalEnrollments: number
+    totalEnrollments: string
     upcomingSessions: string
     averagePrice: string
   }
