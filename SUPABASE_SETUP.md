@@ -14,27 +14,28 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd
 Run the following SQL in your Supabase SQL Editor:
 
 ```sql
--- === ElevateCopilot Referral Program: Schema + RLS + RPCs ===
--- Safe to run in Supabase SQL Editor (project: vpxfryjezpkehjfspsvu)
-
+-- ===== ElevateCopilot Referral Program: EMAIL-LINKED USERS + SECURE RPCs =====
 create extension if not exists pgcrypto;
 
--- 1) Core tables
+-- 1) USERS (email is case-insensitive unique)
 create table if not exists public.users (
   id uuid primary key default gen_random_uuid(),
-  email text unique not null,
+  email text not null unique,
   full_name text,
   created_at timestamptz not null default now()
 );
+create unique index if not exists users_email_lower_uniq on public.users (lower(email));
 
+-- 2) REFERRAL CODES
 create table if not exists public.referral_codes (
-  code text primary key,               -- e.g., EC-12ab34
+  code text primary key,
   owner_id uuid not null references public.users(id) on delete cascade,
   active boolean not null default true,
   created_at timestamptz not null default now()
 );
 create index if not exists idx_referral_codes_owner on public.referral_codes(owner_id);
 
+-- 3) PURCHASES
 create table if not exists public.purchases (
   id uuid primary key default gen_random_uuid(),
   buyer_email text not null,
@@ -44,70 +45,81 @@ create table if not exists public.purchases (
   amount_paid_usd numeric(10,2) not null,
   referral_code text references public.referral_codes(code),
   referrer_reward_usd numeric(10,2) not null default 0,
-  status text not null default 'recorded',  -- recorded|paid|refunded (expand as needed)
+  status text not null default 'recorded',
   meta jsonb default '{}'::jsonb,
   created_at timestamptz not null default now()
 );
 create index if not exists idx_purchases_refcode on public.purchases(referral_code);
 
+-- 4) PAYOUTS
 create table if not exists public.payouts (
   id uuid primary key default gen_random_uuid(),
   referrer_id uuid not null references public.users(id) on delete cascade,
   purchase_id uuid not null references public.purchases(id) on delete cascade,
   amount_usd numeric(10,2) not null,
-  status text not null default 'pending',   -- pending|paid|cancelled
+  status text not null default 'pending',
   created_at timestamptz not null default now(),
   paid_at timestamptz
 );
 create index if not exists idx_payouts_referrer on public.payouts(referrer_id);
 
--- 2) RLS (Row Level Security)
+-- 5) RLS
 alter table public.users enable row level security;
 alter table public.referral_codes enable row level security;
 alter table public.purchases enable row level security;
 alter table public.payouts enable row level security;
 
--- Basic viewer policies (adjust if you add auth). For now: allow anonymous SELECT on non-sensitive tables you want to show in a dashboard.
--- If you will later use Supabase Auth, replace with auth.uid()-based policies.
-
--- Users: no open select by default (contains emails).
+-- Keep tables private by default (we'll expose via RPCs/views)
 revoke all on table public.users from anon;
-
--- Referral codes: allow select by anyone only for code lookup (code + active + owner initials via view).
--- We'll expose only via RPCs; keep table itself private.
 revoke all on table public.referral_codes from anon;
 revoke all on table public.purchases from anon;
 revoke all on table public.payouts from anon;
 
--- 3) Helper: unique code generator
+-- 6) HELPERS
 create or replace function public.gen_referral_code()
-returns text as $$
-  select 'EC-' || substr(encode(gen_random_bytes(6), 'hex'),1,6);
-$$ language sql stable;
+returns text as $$ select 'EC-' || substr(encode(gen_random_bytes(6),'hex'),1,6); $$ language sql stable;
 
--- 4) Create a referral code for a given user
-create or replace function public.create_referral_code(p_owner uuid)
+create or replace function public.upsert_user_by_email(p_email text, p_full_name text default null)
+returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare v_id uuid; v_email text := trim(p_email);
+begin
+  if v_email is null or v_email = '' then
+    raise exception 'Email required';
+  end if;
+  select id into v_id from public.users where lower(email)=lower(v_email) limit 1;
+  if v_id is null then
+    insert into public.users(email, full_name) values (v_email, p_full_name) returning id into v_id;
+  elsif p_full_name is not null then
+    update public.users set full_name = coalesce(full_name, p_full_name) where id = v_id;
+  end if;
+  return v_id;
+end $$;
+grant execute on function public.upsert_user_by_email(text, text) to anon;
+
+-- 7) CREATE CODE BY EMAIL
+create or replace function public.create_referral_code_by_email(p_email text, p_full_name text default null)
 returns text
 language plpgsql
 security definer
 set search_path = public
 as $$
-declare c text;
+declare v_owner uuid; c text;
 begin
-  if not exists (select 1 from public.users where id = p_owner) then
-    raise exception 'Owner % does not exist', p_owner;
-  end if;
+  v_owner := public.upsert_user_by_email(p_email, p_full_name);
   loop
     c := public.gen_referral_code();
-    exit when not exists (select 1 from public.referral_codes where code = c);
+    exit when not exists (select 1 from public.referral_codes where code=c);
   end loop;
-  insert into public.referral_codes(code, owner_id) values (c, p_owner);
+  insert into public.referral_codes(code, owner_id) values (c, v_owner);
   return c;
 end $$;
+grant execute on function public.create_referral_code_by_email(text, text) to anon;
 
-grant execute on function public.create_referral_code(uuid) to anon;
-
--- 5) Redeem referral at purchase time (applies 10% off to buyer and 10% reward to referrer on actual paid)
+-- 8) REDEEM REFERRAL (10% off buyer + 10% reward of amount paid)
 create or replace function public.redeem_referral(
   p_buyer_email text,
   p_course_slug text,
@@ -124,62 +136,55 @@ declare
   v_referrer uuid;
   v_reward   numeric := 0;
   v_purchase uuid;
+  v_code_active boolean := false;
 begin
-  if p_list_price is null or p_list_price <= 0 then
-    raise exception 'Invalid list price';
-  end if;
+  if p_list_price is null or p_list_price <= 0 then raise exception 'Invalid list price'; end if;
 
-  if p_referral_code is not null then
-    select owner_id into v_referrer
-      from public.referral_codes
-     where code = p_referral_code and active = true;
-
-    if v_referrer is not null then
+  if p_referral_code is not null and p_referral_code <> '' then
+    select owner_id, active into v_referrer, v_code_active
+      from public.referral_codes where code = p_referral_code limit 1;
+    if v_referrer is not null and v_code_active then
       v_discount := round(p_list_price * 0.10, 2);
       v_paid     := round(p_list_price - v_discount, 2);
-      v_reward   := round(v_paid * 0.10, 2); -- 10% of amount actually paid
+      v_reward   := round(v_paid * 0.10, 2);
     end if;
   end if;
 
   insert into public.purchases(
-    buyer_email, course_slug, list_price_usd, discount_usd, amount_paid_usd,
-    referral_code, referrer_reward_usd, status
+    buyer_email, course_slug, list_price_usd, discount_usd, amount_paid_usd, referral_code, referrer_reward_usd, status
   ) values (
-    p_buyer_email, p_course_slug, p_list_price, v_discount, v_paid,
-    p_referral_code, v_reward, 'recorded'
+    trim(p_buyer_email), p_course_slug, p_list_price, v_discount, v_paid, p_referral_code, v_reward, 'recorded'
   ) returning id into v_purchase;
 
   if v_referrer is not null and v_reward > 0 then
-    insert into public.payouts(referrer_id, purchase_id, amount_usd)
-    values (v_referrer, v_purchase, v_reward);
+    insert into public.payouts(referrer_id, purchase_id, amount_usd) values (v_referrer, v_purchase, v_reward);
   end if;
 
   return v_purchase;
 end $$;
-
 grant execute on function public.redeem_referral(text, text, numeric, text) to anon;
 
--- Optional helper views for dashboards (hide emails if needed later)
-create or replace view public.v_referrals_summary as
-select r.owner_id, u.full_name, r.code, r.active, r.created_at
-from public.referral_codes r
-join public.users u on u.id = r.owner_id;
+-- 9) VIEWS to fetch a user's codes & totals by email
+create or replace view public.v_user_codes as
+select u.email, u.full_name, r.code, r.active, r.created_at
+from public.users u
+left join public.referral_codes r on r.owner_id = u.id;
+revoke all on view public.v_user_codes from anon;
 
-create or replace view public.v_payouts_summary as
-select p.id payout_id, p.referrer_id, u.full_name, p.amount_usd, p.status, p.created_at
-from public.payouts p
-left join public.users u on u.id = p.referrer_id;
-
--- Views can be selectable by anon if you wish to show public lists; keep off by default.
-revoke all on view public.v_referrals_summary from anon;
-revoke all on view public.v_payouts_summary from anon;
+create or replace view public.v_user_rewards as
+select u.email, coalesce(sum(p.amount_usd),0) as total_rewards
+from public.users u
+left join public.payouts p on p.referrer_id = u.id
+group by u.email;
+revoke all on view public.v_user_rewards from anon;
 ```
 
 ## Features Implemented
 
 ### 1. API Endpoints
-- **POST** `/api/referrals/create` - Generate referral codes for users
+- **POST** `/api/referrals/create` - Generate referral codes by email (creates/updates users automatically)
 - **POST** `/api/referrals/redeem` - Apply referral codes during purchase
+- **POST** `/api/referrals/summary` - Get user's referral codes and rewards summary
 
 ### 2. Database Schema
 - **users** - User management
@@ -191,7 +196,9 @@ revoke all on view public.v_payouts_summary from anon;
 - **10% discount** for buyers using referral codes
 - **10% cashback** for referrers on amount actually paid
 - **Unique code generation** (EC-XXXXXX format)
+- **Email-based user management** - automatically creates/updates users
 - **Fraud prevention** - one code per order, no self-referrals
+- **Case-insensitive email handling** - prevents duplicate accounts
 
 ### 4. UI Components
 - **ReferralCodeForm** - Generate and display referral codes
@@ -206,7 +213,10 @@ revoke all on view public.v_payouts_summary from anon;
 const response = await fetch('/api/referrals/create', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ user_id: 'user-uuid' })
+  body: JSON.stringify({ 
+    email: 'user@example.com',
+    full_name: 'John Doe' // optional
+  })
 });
 const { code } = await response.json();
 // Returns: { code: "EC-12ab34" }

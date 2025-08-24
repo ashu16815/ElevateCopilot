@@ -10,10 +10,6 @@ export const metadata: Metadata = {
 }
 
 export default function ReferralsPage() {
-  // For demo purposes, using a placeholder user ID
-  // In production, this would come from authentication
-  const demoUserId = 'demo-user-123'
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -101,7 +97,7 @@ export default function ReferralsPage() {
 
           {/* Referral Code Generator */}
           <div className="max-w-2xl mx-auto">
-            <ReferralCodeForm userId={demoUserId} />
+            <ReferralCodeForm />
           </div>
         </div>
       </section>

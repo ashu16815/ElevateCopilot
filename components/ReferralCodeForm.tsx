@@ -2,14 +2,21 @@
 
 import React, { useState } from 'react';
 
-export default function ReferralCodeForm({ userId }: { userId: string }) {
+export default function ReferralCodeForm() {
+  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function createCode() {
-    setLoading(true);
+    if (!email.trim()) {
+      setError('Please enter your email address');
+      return;
+    }
+
     setError(null);
+    setLoading(true);
     
     try {
       const res = await fetch('/api/referrals/create', { 
@@ -17,7 +24,10 @@ export default function ReferralCodeForm({ userId }: { userId: string }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user_id: userId }) 
+        body: JSON.stringify({ 
+          email: email.trim(), 
+          full_name: fullName.trim() || null 
+        }) 
       });
       
       const data = await res.json();
@@ -37,32 +47,65 @@ export default function ReferralCodeForm({ userId }: { userId: string }) {
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-      <h3 className="text-lg font-semibold text-primary mb-2">
+      <h3 className="text-lg font-semibold text-primary mb-4">
         Generate your referral code
       </h3>
-      <p className="text-sm text-muted mb-4">
+      <p className="text-sm text-muted mb-6">
         Share this code to give 10% off and earn 10% back.
       </p>
       
+      <div className="space-y-4 mb-6">
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
+            Your email (required)
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            placeholder="Enter your email address"
+            required
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="fullName" className="block text-sm font-medium text-primary mb-2">
+            Your full name (optional)
+          </label>
+          <input
+            id="fullName"
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            placeholder="Enter your full name"
+          />
+        </div>
+      </div>
+      
       <button 
         onClick={createCode} 
-        disabled={loading} 
-        className="px-4 py-2 rounded-lg bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        disabled={loading || !email.trim()} 
+        className="w-full px-6 py-3 rounded-lg bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
       >
         {loading ? 'Generating…' : 'Generate Code'}
       </button>
       
       {error && (
-        <p className="mt-3 text-red-600 text-sm">{error}</p>
+        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600 text-sm">{error}</p>
+        </div>
       )}
       
       {code && (
-        <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-sm text-muted mb-2">Your referral code:</p>
-          <div className="font-mono text-lg font-semibold text-primary bg-white px-3 py-2 rounded border">
+        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <p className="text-sm text-green-800 mb-3">Your referral code:</p>
+          <div className="font-mono text-xl font-bold text-primary bg-white px-4 py-3 rounded-lg border-2 border-green-300 text-center">
             {code}
           </div>
-          <p className="text-xs text-muted mt-2">
+          <p className="text-xs text-green-700 mt-3 text-center">
             Share this code with friends and colleagues to earn rewards!
           </p>
         </div>

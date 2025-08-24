@@ -15,11 +15,11 @@ export async function POST(req: Request) {
       }, { status: 400 });
     }
 
-    const { data, error } = await supabase.rpc('redeem_referral', {
-      p_buyer_email: buyer_email,
-      p_course_slug: course_slug,
-      p_list_price: list_price_usd,
-      p_referral_code: referral_code || null
+    const { data, error } = await supabase.rpc('redeem_referral', { 
+      p_buyer_email: buyer_email, 
+      p_course_slug: course_slug, 
+      p_list_price: list_price_usd, 
+      p_referral_code: referral_code || null 
     });
 
     if (error) {

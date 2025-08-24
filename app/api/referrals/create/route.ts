@@ -7,13 +7,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
     }
 
-    const { user_id } = await req.json();
+    const { email, full_name } = await req.json();
     
-    if (!user_id) {
-      return NextResponse.json({ error: 'user_id required' }, { status: 400 });
+    if (!email) {
+      return NextResponse.json({ error: 'email required' }, { status: 400 });
     }
 
-    const { data, error } = await supabase.rpc('create_referral_code', { p_owner: user_id });
+    const { data, error } = await supabase.rpc('create_referral_code_by_email', { 
+      p_email: email, 
+      p_full_name: full_name || null 
+    });
     
     if (error) {
       console.error('Supabase error:', error);
