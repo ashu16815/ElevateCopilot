@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Clock, TrendingUp, Users } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Clock, TrendingUp, Users, Search, Tag, Calendar, User } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Blog - ElevateCopilot',
@@ -9,6 +9,96 @@ export const metadata: Metadata = {
 }
 
 const blogPosts = [
+  {
+    slug: 'top-10-copilot-prompts-for-consultants',
+    title: 'Top 10 Copilot Prompts for Consultants',
+    summary: 'Ten field-tested Copilot prompts consultants use to win time, sharpen client deliverables, and increase impact—spanning email, analysis, and executive-ready decks.',
+    bullets: [
+      'Outlook email triage and stakeholder heatmap prompts for efficient communication.',
+      'Word document drafting and options memo creation for client deliverables.',
+      'Excel variance analysis and KPI snapshot generation for data insights.',
+      'PowerPoint executive deck creation and alternative storyline development.'
+    ],
+    sources: [
+      {
+        url: 'https://www.gov.uk/government/publications/microsoft-365-copilot-experiment-cross-government-findings-report',
+        title: 'UK Cross-Government Copilot Trial (Time Saved)'
+      },
+      {
+        url: 'https://www.microsoft.com/en-us/worklab',
+        title: 'Microsoft Work Trend Index (AI at Work)'
+      },
+      {
+        url: 'https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview',
+        title: 'Microsoft Learn for Copilot in M365'
+      }
+    ],
+    icon: TrendingUp,
+    color: 'bg-blue-100 text-blue-800',
+    tags: ['Consulting', 'Prompts', 'Productivity', 'Microsoft 365'],
+    date: '2025-08-25',
+    author: 'ElevateCopilot Editorial Team'
+  },
+  {
+    slug: 'roi-of-microsoft-copilot-for-finance-teams',
+    title: 'ROI of Microsoft Copilot for Finance Teams',
+    summary: 'A practical ROI framework for controllers, FP&A, and finance leaders—covering time savings, quality uplift, and throughput gains with Copilot.',
+    bullets: [
+      'Month-end close automation: draft reconciliations, narrative notes, and variance commentary.',
+      'Management reporting: first-pass narratives for KPIs, risks, and drivers.',
+      'Board packs: summary pages, risk/mitigation tables, and talking points.',
+      'Ad-hoc analysis: explain drivers behind unusual movements with AI assistance.'
+    ],
+    sources: [
+      {
+        url: 'https://tei.forrester.com/go/Microsoft/365Copilot/',
+        title: 'Forrester TEI (Directional ROI)'
+      },
+      {
+        url: 'https://www.gov.uk/government/publications/microsoft-365-copilot-experiment-cross-government-findings-report',
+        title: 'UK Cross-Government Copilot Trial'
+      },
+      {
+        url: 'https://www.microsoft.com/en-us/worklab',
+        title: 'Microsoft WorkLab (AI at Work Insights)'
+      }
+    ],
+    icon: TrendingUp,
+    color: 'bg-green-100 text-green-800',
+    tags: ['Finance', 'ROI', 'Microsoft 365', 'Productivity'],
+    date: '2025-08-25',
+    author: 'ElevateCopilot Editorial Team'
+  },
+  {
+    slug: 'copilot-vs-chatgpt-which-is-better-for-professionals',
+    title: 'Copilot vs. ChatGPT: Which Is Better for Professionals?',
+    summary: 'Side-by-side comparison: where Copilot shines inside Microsoft 365 workflows, where ChatGPT excels, and how to choose (or combine) them for daily work.',
+    bullets: [
+      'Copilot excels in Microsoft 365 integration with enterprise controls and in-app context.',
+      'ChatGPT shines in open-ended ideation, multilingual drafting, and general research.',
+      'Many professionals benefit from using both tools strategically for different use cases.',
+      'Choose based on data sensitivity, workflow integration needs, and creative requirements.'
+    ],
+    sources: [
+      {
+        url: 'https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview',
+        title: 'Microsoft 365 Copilot Overview'
+      },
+      {
+        url: 'https://www.microsoft.com/en-us/worklab',
+        title: 'Microsoft WorkLab (AI at Work)'
+      },
+      {
+        url: 'https://platform.openai.com/docs',
+        title: 'OpenAI Product Updates & Documentation'
+      }
+    ],
+    icon: Users,
+    color: 'bg-purple-100 text-purple-800',
+    tags: ['Comparison', 'Microsoft 365', 'ChatGPT', 'Productivity'],
+    date: '2025-08-25',
+    author: 'ElevateCopilot Editorial Team'
+  },
   {
     slug: 'ai-career-earnings',
     title: 'AI at Work: How Employees Are Earning More by Using It Effectively',
@@ -34,7 +124,10 @@ const blogPosts = [
       }
     ],
     icon: TrendingUp,
-    color: 'bg-green-100 text-green-800'
+    color: 'bg-green-100 text-green-800',
+    tags: ['AI Adoption', 'Career Growth', 'Productivity', 'Microsoft Copilot'],
+    date: '2025-08-24',
+    author: 'ElevateCopilot Editorial Team'
   },
   {
     slug: 'copilot-saves-time-how-much',
@@ -55,7 +148,10 @@ const blogPosts = [
       }
     ],
     icon: Clock,
-    color: 'bg-blue-100 text-blue-800'
+    color: 'bg-blue-100 text-blue-800',
+    tags: ['Time Savings', 'Productivity', 'Research', 'Microsoft Copilot'],
+    date: '2025-08-23',
+    author: 'ElevateCopilot Editorial Team'
   },
   {
     slug: 'roi-for-leaders',
@@ -76,7 +172,10 @@ const blogPosts = [
       }
     ],
     icon: TrendingUp,
-    color: 'bg-green-100 text-green-800'
+    color: 'bg-green-100 text-green-800',
+    tags: ['ROI', 'Leadership', 'Business Case', 'Microsoft Copilot'],
+    date: '2025-08-22',
+    author: 'ElevateCopilot Editorial Team'
   },
   {
     slug: 'what-users-say',
@@ -97,9 +196,15 @@ const blogPosts = [
       }
     ],
     icon: Users,
-    color: 'bg-purple-100 text-purple-800'
+    color: 'bg-purple-100 text-purple-800',
+    tags: ['User Experience', 'Adoption', 'Productivity', 'Microsoft Copilot'],
+    date: '2025-08-21',
+    author: 'ElevateCopilot Editorial Team'
   }
 ]
+
+// Get all unique tags
+const allTags = [...new Set(blogPosts.flatMap(post => post.tags))]
 
 export default function BlogPage() {
   return (
@@ -127,96 +232,197 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Blog Posts */}
+      {/* Blog Content - Two Column Layout */}
       <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-12">
-            {blogPosts.map((post, index) => (
-              <article key={post.slug} className="bg-white rounded-2xl shadow-lg p-8">
-                {/* Post Header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg ${post.color}`}>
-                      <post.icon className="h-5 w-5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Main Content - Left Column */}
+            <div className="lg:col-span-2">
+              <div className="space-y-12">
+                {blogPosts.map((post, index) => (
+                  <article key={post.slug} className="bg-white rounded-2xl shadow-lg p-8">
+                    {/* Post Header */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center space-x-3">
+                        <div className={`p-2 rounded-lg ${post.color}`}>
+                          <post.icon className="h-5 w-5" />
+                        </div>
+                        <span className="text-sm text-muted">Research & Insights</span>
+                      </div>
+                      {index === 0 && (
+                        <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-sm font-medium">
+                          Latest
+                        </span>
+                      )}
                     </div>
-                    <span className="text-sm text-muted">Research & Insights</span>
-                  </div>
-                  {index === 0 && (
-                    <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-sm font-medium">
-                      Latest
-                    </span>
-                  )}
-                </div>
 
-                {/* Post Title */}
-                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4 font-playfair">
-                  {post.title}
-                </h2>
+                    {/* Post Meta */}
+                    <div className="flex items-center space-x-4 text-sm text-muted mb-4">
+                      <div className="flex items-center">
+                        <User className="h-4 w-4 mr-2" />
+                        {post.author}
+                      </div>
+                      <div className="flex items-center">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        {post.date}
+                      </div>
+                    </div>
 
-                {/* Post Summary */}
-                <p className="text-lg text-muted mb-6 leading-relaxed">
-                  {post.summary}
-                </p>
+                    {/* Post Title */}
+                    <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4 font-playfair">
+                      {post.title}
+                    </h2>
 
-                {/* Key Points */}
-                <div className="mb-8">
-                  <h3 className="font-semibold text-primary mb-3">Key Findings:</h3>
-                  <ul className="space-y-2">
-                    {post.bullets.map((bullet, bulletIndex) => (
-                      <li key={bulletIndex} className="flex items-start text-muted">
-                        <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    {/* Post Summary */}
+                    <p className="text-lg text-muted mb-6 leading-relaxed">
+                      {post.summary}
+                    </p>
 
-                {/* Sources */}
-                <div className="border-t border-gray-100 pt-6">
-                  <h4 className="font-semibold text-primary mb-3">Sources & Research:</h4>
-                  <div className="space-y-2">
-                    {post.sources.map((source, sourceIndex) => (
-                      <a
-                        key={sourceIndex}
-                        href={source.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-accent hover:text-accent/80 transition-colors group"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
-                        <span className="text-sm">{source.title}</span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {post.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className="px-3 py-1 bg-accent/10 text-accent text-sm rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-          {/* CTA Section */}
-          <div className="mt-16 text-center">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-primary mb-4">
-                Ready to See These Results in Your Organization?
-              </h2>
-              <p className="text-muted mb-6 max-w-2xl mx-auto">
-                Our evidence-based training programs help teams achieve measurable productivity gains and ROI with Microsoft Copilot.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/courses"
-                  className="btn-primary px-8 py-3"
-                >
-                  Explore Training Programs
-                </Link>
-                <Link
-                  href="/corporate-training"
-                  className="btn-secondary px-8 py-3"
-                >
-                  Corporate Training
-                </Link>
+                    {/* Key Points */}
+                    <div className="mb-8">
+                      <h3 className="font-semibold text-primary mb-3">Key Findings:</h3>
+                      <ul className="space-y-2">
+                        {post.bullets.map((bullet, bulletIndex) => (
+                          <li key={bulletIndex} className="flex items-start text-muted">
+                            <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                            {bullet}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Sources */}
+                    <div className="border-t border-gray-100 pt-6">
+                      <h4 className="font-semibold text-primary mb-3">Sources & Research:</h4>
+                      <div className="space-y-2">
+                        {post.sources.map((source, sourceIndex) => (
+                          <a
+                            key={sourceIndex}
+                            href={source.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center text-accent hover:text-accent/80 transition-colors group"
+                          >
+                            <ExternalLink className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
+                            <span className="text-sm">{source.title}</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
+
+            {/* Sidebar - Right Column */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8 space-y-8">
+                {/* Search */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4 flex items-center">
+                    <Search className="h-5 w-5 mr-2" />
+                    Search Articles
+                  </h3>
+                  <input
+                    type="text"
+                    placeholder="Search insights..."
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  />
+                </div>
+
+                {/* Tags */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4 flex items-center">
+                    <Tag className="h-5 w-5 mr-2" />
+                    Popular Tags
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {allTags.slice(0, 12).map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-accent/10 text-accent text-sm rounded-full cursor-pointer hover:bg-accent/20 transition-colors"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Latest Posts */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4">Latest</h3>
+                  <div className="space-y-4">
+                    {blogPosts.slice(0, 6).map((post, index) => (
+                      <div key={post.slug} className="border-b border-gray-100 pb-3 last:border-b-0">
+                        <h4 className="font-medium text-primary text-sm mb-2 line-clamp-2">
+                          {post.title}
+                        </h4>
+                        <div className="flex items-center text-xs text-muted">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {post.date}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Popular Posts */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4">Popular</h3>
+                  <div className="space-y-4">
+                    {blogPosts.slice(0, 6).map((post, index) => (
+                      <div key={post.slug} className="border-b border-gray-100 pb-3 last:border-b-0">
+                        <h4 className="font-medium text-primary text-sm mb-2 line-clamp-2">
+                          {post.title}
+                        </h4>
+                        <div className="flex items-center text-xs text-muted">
+                          <Tag className="h-3 w-3 mr-1" />
+                          {post.tags[0]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-primary mb-4">
+            Ready to See These Results in Your Organization?
+          </h2>
+          <p className="text-muted mb-6 max-w-2xl mx-auto">
+            Our evidence-based training programs help teams achieve measurable productivity gains and ROI with Microsoft Copilot.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/courses"
+              className="btn-primary px-8 py-3"
+            >
+              Explore Training Programs
+            </Link>
+            <Link
+              href="/corporate-training"
+              className="btn-secondary px-8 py-3"
+            >
+              Corporate Training
+            </Link>
           </div>
         </div>
       </section>

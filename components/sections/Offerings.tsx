@@ -133,10 +133,9 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
         <div className="text-center mt-12">
           <Link
             href="/courses"
-            className="inline-flex items-center text-accent hover:text-accent/80 font-semibold text-lg group"
+            className="inline-block px-7 py-3.5 bg-[#C6A664] text-white font-semibold text-lg rounded-lg hover:bg-[#B08E54] transform hover:scale-105 transition-all duration-200 ease-in-out shadow-lg hover:shadow-xl"
           >
-            View All Training Programs
-            <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            🚀 View All Courses & Bundles
           </Link>
         </div>
       </div>
