@@ -281,7 +281,7 @@ export default function ContactPage() {
                 />
                 <label htmlFor="consent" className="text-sm text-muted">
                   I consent to ElevateCopilot contacting me about training opportunities and agree to the{' '}
-                  <a href="/policies/privacy" className="text-accent hover:underline">Privacy Policy</a>
+                  <a href="/privacy-policy" className="text-accent hover:underline">Privacy Policy</a>
                 </label>
               </div>
 
