@@ -19,6 +19,7 @@ export default function ContactPage() {
     course: courseSlug || '',
     availability: '',
     goals: '',
+    referral_code: '',
     consent: false
   })
 
@@ -81,6 +82,7 @@ export default function ContactPage() {
       formDataToSend.append('course', formData.course || 'Not specified')
       formDataToSend.append('availability', formData.availability || 'Not specified')
       formDataToSend.append('goals', formData.goals || 'Not specified')
+      formDataToSend.append('referral_code', formData.referral_code || 'Not provided')
       formDataToSend.append('consent', formData.consent ? 'Yes' : 'No')
       
       // Add web3forms specific fields
@@ -106,6 +108,7 @@ export default function ContactPage() {
           course: '',
           availability: '',
           goals: '',
+          referral_code: '',
           consent: false
         })
       } else {
@@ -267,6 +270,24 @@ export default function ContactPage() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="What problems should this help you solve at work?"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="referral_code" className="block text-sm font-medium text-primary mb-2">
+                  Referral Code (optional)
+                </label>
+                <input
+                  type="text"
+                  id="referral_code"
+                  name="referral_code"
+                  value={formData.referral_code}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="Enter a code if you have one"
+                />
+                <p className="text-sm text-muted mt-2">
+                  Have a referral code? Enter it to receive 10% off. Your referrer will earn 10% back when you purchase.
+                </p>
               </div>
 
               <div className="flex items-start space-x-3">

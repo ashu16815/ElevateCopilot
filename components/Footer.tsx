@@ -19,6 +19,7 @@ const Footer = () => {
       links: [
         { name: "About", href: "/about" },
         { name: "FAQ", href: "/faq" },
+        { name: "Referrals", href: "/referrals" },
         { name: "Contact", href: "/contact" },
         { name: "Privacy Policy", href: "/privacy-policy" },
       ]
