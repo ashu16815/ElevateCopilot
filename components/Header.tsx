@@ -8,15 +8,14 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Courses', href: '/courses' },
-    { name: 'Bundles', href: '/courses#course-bundles' },
-    { name: 'Corporate Training', href: '/corporate-training' },
-    { name: 'Certification', href: '/certification' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
-  ]
+  { name: 'Home', href: '/' },
+  { name: 'Courses', href: '/courses' },
+  { name: 'Corporate Training', href: '/corporate-training' },
+  { name: 'Certification', href: '/certification' },
+  { name: 'Resources', href: '/resources' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
+]
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
