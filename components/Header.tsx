@@ -20,7 +20,7 @@ const Header = () => {
     },
     { name: 'Corporate Training', href: '/corporate-training' },
     { name: 'Certification', href: '/certification' },
-    { name: 'Schedule', href: '/schedule' },
+
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ]
@@ -84,10 +84,10 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Link
-              href="/schedule"
+              href="/contact"
               className="btn-primary"
             >
-              Join a Live Session
+              Register Interest
             </Link>
           </div>
 

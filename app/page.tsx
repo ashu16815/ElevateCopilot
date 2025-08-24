@@ -5,7 +5,7 @@ import Offerings from '@/components/sections/Offerings'
 import Certification from '@/components/sections/Certification'
 import Testimonials from '@/components/sections/Testimonials'
 import FinalCTA from '@/components/sections/FinalCTA'
-import { getFeaturedCourses, getCourseStats } from '@/lib/data/courses'
+import { CourseRepository } from '@/lib/repositories/courseRepository'
 
 export const metadata: Metadata = {
   title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const featuredCourses = getFeaturedCourses()
-  const courseStats = getCourseStats()
+  const featuredCourses = CourseRepository.getFeaturedCourses()
+  const courseStats = CourseRepository.getCourseStats()
 
   return (
     <main>

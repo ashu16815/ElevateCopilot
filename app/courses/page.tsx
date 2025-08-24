@@ -8,7 +8,8 @@ import {
   Star,
   Calendar,
   MapPin,
-  ArrowRight
+  ArrowRight,
+  DollarSign
 } from 'lucide-react'
 import { CourseRepository } from '@/lib/repositories/courseRepository'
 import { SessionRepository } from '@/lib/repositories/courseRepository'
@@ -21,22 +22,6 @@ export const metadata: Metadata = {
 
 const CoursesPage = async () => {
   const courses = CourseRepository.getActiveCourses()
-const upcomingSessions = SessionRepository.getUpcomingSessions()
-
-  const getCategoryColor = (category: string) => {
-    switch (category.toLowerCase()) {
-      case 'masterclass':
-        return 'bg-blue-100 text-blue-800'
-      case 'certification':
-        return 'bg-green-100 text-green-800'
-      case 'corporate':
-        return 'bg-purple-100 text-purple-800'
-      case 'advanced':
-        return 'bg-orange-100 text-orange-800'
-      default:
-        return 'bg-accent/10 text-accent'
-    }
-  }
 
   const getLevelColor = (level: string) => {
     switch (level.toLowerCase()) {
@@ -46,9 +31,18 @@ const upcomingSessions = SessionRepository.getUpcomingSessions()
         return 'bg-yellow-100 text-yellow-800'
       case 'advanced':
         return 'bg-red-100 text-red-800'
+      case 'leadership':
+        return 'bg-purple-100 text-purple-800'
       default:
         return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  const getModeColor = (mode: string) => {
+    if (mode.includes('Online')) return 'bg-blue-100 text-blue-800'
+    if (mode.includes('Hybrid')) return 'bg-purple-100 text-purple-800'
+    if (mode.includes('In-Person')) return 'bg-green-100 text-green-800'
+    return 'bg-gray-100 text-gray-800'
   }
 
   return (
@@ -84,126 +78,77 @@ const upcomingSessions = SessionRepository.getUpcomingSessions()
                   {/* Header */}
                   <div className="flex items-start justify-between mb-6">
                     <div className="space-y-2">
-                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(course.category)}`}>
-                        {course.category}
+                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${getModeColor(course.mode)}`}>
+                        {course.mode}
                       </span>
                       <h3 className="text-2xl font-bold text-primary">
                         {course.title}
                       </h3>
                     </div>
-                    {course.certification && (
-                      <div className="bg-accent/10 p-3 rounded-lg">
-                        <Award className="h-6 w-6 text-accent" />
+                    <div className="text-right">
+                      <div className="text-3xl font-bold text-accent">
+                        NZ${course.price_nzd}
                       </div>
-                    )}
+                      {course.price_private_nzd && (
+                        <div className="text-sm text-muted">
+                          Private: NZ${course.price_private_nzd}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-muted mb-6 leading-relaxed">
-                    {course.description}
+                  {/* Tagline */}
+                  <p className="text-muted mb-6 italic">
+                    {course.tagline}
                   </p>
 
                   {/* Course Details */}
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="flex items-center space-x-2 text-sm text-muted">
-                      <Clock className="h-4 w-4" />
-                      <span>{course.duration}</span>
+                  <div className="flex items-center space-x-6 mb-6 text-sm text-muted">
+                    <div className="flex items-center">
+                      <Clock className="h-4 w-4 mr-2" />
+                      {course.duration}
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-muted">
-                      <Users className="h-4 w-4" />
-                      <span>{course.format}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-muted">
-                      <Award className="h-4 w-4" />
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${getLevelColor(course.level)}`}>
+                    <div className="flex items-center">
+                      <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>
                         {course.level}
                       </span>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-muted">
-                      <Star className="h-4 w-4" />
-                      <span>Instructor: {course.instructor}</span>
-                    </div>
                   </div>
 
-                  {/* Learning Objectives */}
+                  {/* What You'll Learn */}
                   <div className="mb-6">
                     <h4 className="font-semibold text-primary mb-3">What You'll Learn:</h4>
-                    <div className="space-y-2">
-                      {course.objectives.map((objective, index) => (
-                        <div key={index} className="flex items-start space-x-2 text-sm text-muted">
-                          <CheckCircle className="h-4 w-4 text-accent mt-0.5 flex-shrink-0" />
-                          <span>{objective}</span>
-                        </div>
+                    <ul className="space-y-2">
+                      {course.learn.map((item, index) => (
+                        <li key={index} className="flex items-start text-sm text-muted">
+                          <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                          {item}
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
 
-                  {/* Prerequisites */}
-                  {course.prerequisites.length > 0 && (
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-primary mb-3">Prerequisites:</h4>
-                      <div className="space-y-2">
-                        {course.prerequisites.map((prerequisite, index) => (
-                          <div key={index} className="flex items-start space-x-2 text-sm text-muted">
-                            <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                            <span>{prerequisite}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Course Content */}
+                  {/* Key Takeaways */}
                   <div className="mb-6">
-                    <h4 className="font-semibold text-primary mb-3">Course Content:</h4>
-                    <p className="text-sm text-muted leading-relaxed">
-                      {course.agenda}
-                    </p>
+                    <h4 className="font-semibold text-primary mb-3">Key Takeaways:</h4>
+                    <ul className="space-y-2">
+                      {course.takeaways.map((item, index) => (
+                        <li key={index} className="flex items-start text-sm text-muted">
+                          <Star className="h-4 w-4 text-accent mr-2 mt-0.5 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  {/* Materials */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-primary mb-3">Materials Included:</h4>
-                    <p className="text-sm text-muted leading-relaxed">
-                      {course.materials}
-                    </p>
-                  </div>
-
-                  {/* Price and Enrollment */}
-                  <div className="border-t border-gray-200 pt-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-3xl font-bold text-accent">
-                        {course.price}
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-muted">Available Seats</div>
-                        <div className="font-semibold text-primary">
-                          {course.maxSeats - course.enrolled} of {course.maxSeats}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Enrollment Progress */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-sm text-muted mb-1">
-                        <span>Enrollment Progress</span>
-                        <span>{Math.round((course.enrolled / course.maxSeats) * 100)}%</span>
-                      </div>
-                      <div className="bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-accent h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${(course.enrolled / course.maxSeats) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    {/* CTA */}
+                  {/* CTA Button */}
+                  <div className="text-center">
                     <Link
-                      href="/schedule"
-                      className="w-full bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center justify-center group"
+                      href={course.cta.href}
+                      className="btn-primary w-full flex items-center justify-center group"
                     >
-                      Book Your Seat
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      {course.cta.label}
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
                     </Link>
                   </div>
                 </div>
@@ -213,86 +158,27 @@ const upcomingSessions = SessionRepository.getUpcomingSessions()
         </div>
       </section>
 
-      {/* Upcoming Sessions */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-primary mb-4">
-              Upcoming Training Sessions
-            </h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto">
-              Join our live training sessions and learn from expert instructors
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingSessions.map((session) => (
-              <div key={session.id} className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-accent/30 transition-colors">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="font-semibold text-primary mb-1">
-                      {session.course.title}
-                    </h3>
-                    <p className="text-sm text-muted">{session.instructor}</p>
-                  </div>
-                  <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
-                    session.status === 'scheduled' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {session.status}
-                  </span>
-                </div>
-
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center space-x-2 text-sm text-muted">
-                    <Calendar className="h-4 w-4" />
-                    <span>{new Date(session.date).toLocaleDateString('en-US', { 
-                      weekday: 'short', 
-                      month: 'short', 
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm text-muted">
-                    <Clock className="h-4 w-4" />
-                    <span>{session.startTime} - {session.endTime} ({session.timezone})</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm text-muted">
-                    <MapPin className="h-4 w-4" />
-                    <span>{session.location}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-2xl font-bold text-accent">
-                    {session.price}
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-muted">Seats Available</div>
-                    <div className="font-semibold text-primary">
-                      {session.maxSeats - session.enrolled} of {session.maxSeats}
-                    </div>
-                  </div>
-                </div>
-
-                <Link
-                  href="/schedule"
-                  className="w-full bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-4 rounded-lg transition-colors inline-flex items-center justify-center text-sm"
-                >
-                  Book Session
-                  <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          {/* View All Sessions CTA */}
-          <div className="text-center mt-12">
+      {/* CTA Section */}
+      <section className="py-20 bg-primary text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair">
+            Ready to Transform Your Productivity?
+          </h2>
+          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+            Join thousands of professionals who have already mastered Microsoft Copilot with our proven training programs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/schedule"
-              className="inline-flex items-center text-accent hover:text-accent/80 font-semibold text-lg group"
+              href="/contact"
+              className="btn-secondary px-8 py-4 text-lg font-semibold"
             >
-              View All Training Sessions
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              Register Interest
+            </Link>
+            <Link
+              href="/corporate-training"
+              className="btn-outline-white px-8 py-4 text-lg font-semibold"
+            >
+              Corporate Training
             </Link>
           </div>
         </div>

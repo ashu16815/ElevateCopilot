@@ -39,7 +39,7 @@ const CorporateTrainingPage = () => {
       formDataToSend.append('message', formData.message)
       formDataToSend.append('access_key', 'be6ff4a1-4ba7-45b1-ba03-4b1137ca0574')
       formDataToSend.append('subject', `Corporate Training Inquiry: ${formData.company} - ${formData.name}`)
-      formDataToSend.append('to', 'elevatecopilot@outlook.com')
+      formDataToSend.append('to', 'info@elevatecopilot.com')
       formDataToSend.append('from_name', 'ElevateCopilot Corporate Training Form')
 
       const response = await fetch('https://api.web3forms.com/submit', {

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Award, Clock, Users, CheckCircle } from 'lucide-react'
+import { Award, Clock, Users, CheckCircle, DollarSign } from 'lucide-react'
 import { Course } from '@/lib/data/courses'
 
 interface OfferingsProps {
@@ -7,26 +7,30 @@ interface OfferingsProps {
 }
 
 const Offerings = ({ featuredCourses }: OfferingsProps) => {
-  const getCategoryIcon = (category: string) => {
-    switch (category.toLowerCase()) {
-      case 'masterclass':
+  const getLevelIcon = (level: string) => {
+    switch (level.toLowerCase()) {
+      case 'beginner':
         return <Clock className="h-6 w-6" />
-      case 'certification':
+      case 'intermediate':
         return <Award className="h-6 w-6" />
-      case 'corporate':
+      case 'advanced':
         return <Users className="h-6 w-6" />
+      case 'leadership':
+        return <Award className="h-6 w-6" />
       default:
         return <Award className="h-6 w-6" />
     }
   }
 
-  const getCategoryColor = (category: string) => {
-    switch (category.toLowerCase()) {
-      case 'masterclass':
-        return 'bg-blue-100 text-blue-600'
-      case 'certification':
+  const getLevelColor = (level: string) => {
+    switch (level.toLowerCase()) {
+      case 'beginner':
         return 'bg-green-100 text-green-600'
-      case 'corporate':
+      case 'intermediate':
+        return 'bg-yellow-100 text-yellow-600'
+      case 'advanced':
+        return 'bg-red-100 text-red-600'
+      case 'leadership':
         return 'bg-purple-100 text-purple-600'
       default:
         return 'bg-accent/10 text-accent'
@@ -49,16 +53,16 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
           {featuredCourses.map((course) => (
             <div key={course.id} className="card group hover:scale-105 transition-all duration-300">
               <div className="p-8">
-                {/* Category Badge */}
+                {/* Level Badge */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(course.category)}`}>
-                    {getCategoryIcon(course.category)}
-                    <span className="ml-2">{course.category}</span>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>
+                    {getLevelIcon(course.level)}
+                    <span className="ml-2">{course.level}</span>
                   </span>
-                  {course.certification && (
+                  {course.badge && (
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent">
                       <Award className="h-3 w-3 mr-1" />
-                      Certification
+                      {course.badge}
                     </span>
                   )}
                 </div>
@@ -68,9 +72,9 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
                   {course.title}
                 </h3>
 
-                {/* Course Description */}
-                <p className="text-muted mb-6 leading-relaxed">
-                  {course.shortDescription}
+                {/* Course Tagline */}
+                <p className="text-muted mb-6 leading-relaxed italic">
+                  {course.tagline}
                 </p>
 
                 {/* Course Details */}
@@ -81,22 +85,22 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
                   </div>
                   <div className="flex items-center text-sm text-muted">
                     <Users className="h-4 w-4 mr-2" />
-                    <span>{course.format}</span>
+                    <span>{course.mode}</span>
                   </div>
                   <div className="flex items-center text-sm text-muted">
-                    <Award className="h-4 w-4 mr-2" />
-                    <span>{course.level} Level</span>
+                    <DollarSign className="h-4 w-4 mr-2" />
+                    <span>NZ${course.price_nzd}</span>
                   </div>
                 </div>
 
                 {/* Key Features */}
                 <div className="mb-6">
-                  <h4 className="font-semibold text-primary mb-3">What's Included:</h4>
+                  <h4 className="font-semibold text-primary mb-3">What You'll Learn:</h4>
                   <div className="space-y-2">
-                    {course.objectives.slice(0, 3).map((objective, index) => (
+                    {course.learn.slice(0, 3).map((item, index) => (
                       <div key={index} className="flex items-center text-sm text-muted">
                         <CheckCircle className="h-4 w-4 text-accent mr-2 flex-shrink-0" />
-                        <span>{objective}</span>
+                        <span>{item}</span>
                       </div>
                     ))}
                   </div>
@@ -105,32 +109,18 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
                 {/* Price and CTA */}
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-primary">
-                    {course.price}
+                    NZ${course.price_nzd}
                   </div>
                   <Link
-                    href={`/courses#${course.slug}`}
+                    href={course.cta.href}
                     className="bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-6 rounded-lg transition-colors inline-flex items-center group"
                   >
-                    Learn More
+                    {course.cta.label}
                     <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
                   </Link>
                 </div>
 
-                {/* Enrollment Status */}
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted">Available Seats:</span>
-                    <span className="font-medium text-primary">
-                      {course.maxSeats - course.enrolled} of {course.maxSeats}
-                    </span>
-                  </div>
-                  <div className="mt-2 bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-accent h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${(course.enrolled / course.maxSeats) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
+
               </div>
             </div>
           ))}

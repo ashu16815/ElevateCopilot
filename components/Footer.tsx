@@ -7,7 +7,7 @@ const Footer = () => {
     { name: 'Courses', href: '/courses' },
     { name: 'Corporate Training', href: '/corporate-training' },
     { name: 'Certification', href: '/certification' },
-    { name: 'Schedule', href: '/schedule' },
+
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ]
@@ -88,14 +88,8 @@ const Footer = () => {
             <div className="space-y-2 text-gray-300">
               <p className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <a href="mailto:elevatecopilot@outlook.com" className="hover:text-white transition-colors">
-                  elevatecopilot@outlook.com
-                </a>
-              </p>
-              <p className="flex items-center">
-                <Phone className="h-4 w-4 mr-2" />
-                <a href="tel:+61412345678" className="hover:text-white transition-colors">
-                  +61 412 345 678
+                <a href="mailto:info@elevatecopilot.com" className="hover:text-white transition-colors">
+                  info@elevatecopilot.com
                 </a>
               </p>
               <p className="flex items-center">

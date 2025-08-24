@@ -15,7 +15,7 @@ const CoursesManagementPage = () => {
   const [courseStats, setCourseStats] = useState({
     totalCourses: 0,
     totalEnrollments: 0,
-    activeCourses: 0,
+    upcomingSessions: 0,
     averagePrice: ''
   })
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
@@ -46,13 +46,9 @@ const CoursesManagementPage = () => {
     if (searchTerm) {
       filtered = filtered.filter(course =>
         course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(searchTerm.toLowerCase())
+        course.tagline.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.level.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    }
-
-    if (categoryFilter) {
-      filtered = filtered.filter(course => course.category === categoryFilter)
     }
 
     if (statusFilter) {
@@ -108,13 +104,18 @@ const CoursesManagementPage = () => {
     }
   }
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Masterclass': return 'bg-blue-100 text-blue-800'
-      case 'Certification': return 'bg-purple-100 text-purple-800'
-      case 'Corporate': return 'bg-orange-100 text-orange-800'
-      case 'Advanced': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+  const getLevelColor = (level: string) => {
+    switch (level.toLowerCase()) {
+      case 'beginner':
+        return 'bg-green-100 text-green-800'
+      case 'intermediate':
+        return 'bg-yellow-100 text-yellow-800'
+      case 'advanced':
+        return 'bg-red-100 text-red-800'
+      case 'leadership':
+        return 'bg-purple-100 text-purple-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
     }
   }
 
@@ -182,7 +183,7 @@ const CoursesManagementPage = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Active Courses</p>
-                <p className="text-2xl font-semibold text-gray-900">{courseStats.activeCourses}</p>
+                <p className="text-2xl font-semibold text-gray-900">{courseStats.totalCourses}</p>
               </div>
             </div>
           </div>
@@ -233,20 +234,7 @@ const CoursesManagementPage = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
-              >
-                <option value="">All Categories</option>
-                <option value="Masterclass">Masterclass</option>
-                <option value="Certification">Certification</option>
-                <option value="Corporate">Corporate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
+
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
@@ -284,19 +272,19 @@ const CoursesManagementPage = () => {
                     Course
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Category
+                    Level
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Instructor
+                    Mode
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Price
+                    Price (NZD)
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Enrolled
+                    Duration
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
@@ -309,12 +297,12 @@ const CoursesManagementPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
                         <div className="text-sm font-medium text-gray-900">{course.title}</div>
-                        <div className="text-sm text-gray-500">{course.shortDescription}</div>
+                        <div className="text-sm text-gray-500">{course.tagline}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getCategoryColor(course.category)}`}>
-                        {course.category}
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getLevelColor(course.level)}`}>
+                        {course.level}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -323,13 +311,13 @@ const CoursesManagementPage = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {course.instructor}
+                      {course.mode}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {course.price}
+                      NZ${course.price_nzd}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {course.enrolled}/{course.maxSeats}
+                      {course.duration}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-2">
