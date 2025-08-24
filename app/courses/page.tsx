@@ -36,6 +36,15 @@ export default async function CoursesPage() {
         </div>
       </section>
 
+      {/* Weekly Sessions Notice */}
+      <section className="py-12 bg-accent/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-lg text-muted">
+            We run live sessions every week. Tell us what you need—our team will match you to the next cohort.
+          </p>
+        </div>
+      </section>
+
       {/* Courses Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,6 +122,113 @@ export default async function CoursesPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Course Bundles */}
+      <section id="course-bundles" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-playfair">
+              Course Bundles
+            </h2>
+            <p className="text-xl text-muted max-w-3xl mx-auto">
+              Best value: master Copilot end-to-end and earn your badge.
+            </p>
+            <p className="text-sm text-muted mt-4">
+              All prices in USD. Every course includes practice materials, a certificate, and a LinkedIn-shareable badge.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-3xl p-8 border border-accent/20">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-accent/20 text-accent mb-4">
+                  Most Popular
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-primary mb-2 font-playfair">
+                  All 4 Courses + Badge
+                </h3>
+                <div className="text-4xl font-bold text-accent mb-2">
+                  $499
+                </div>
+                <p className="text-muted text-sm">
+                  Save compared to buying individually.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h4 className="font-semibold text-primary mb-4">What's Included:</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Copilot Kickstart (90-min Masterclass)
+                    </li>
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Copilot in M365 Deep Dive (Half-Day)
+                    </li>
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Copilot Certification (Full-Day + Assessment)
+                    </li>
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Executive Briefing: ROI, Risk & Rollout (90-min)
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-primary mb-4">Bundle Benefits:</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      One seamless learning path from zero-to-confident
+                    </li>
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Hands-on practice files and prompt libraries
+                    </li>
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Final assessment + ElevateCopilot Practitioner Badge
+                    </li>
+                    <li className="flex items-start text-muted">
+                      <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      Email support during the learning path
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="text-center mb-6">
+                <Link
+                  href="/contact?course=bundle-all-4"
+                  className="btn-primary px-8 py-3 text-lg"
+                >
+                  Register Interest for Bundle
+                </Link>
+              </div>
+
+              <div className="text-center space-y-4">
+                <div className="bg-white rounded-lg p-4 border border-accent/20">
+                  <h5 className="font-semibold text-primary mb-2">Referral Program</h5>
+                  <p className="text-muted text-sm">
+                    Get 10% off with our referral program — please reach out to us for details.
+                  </p>
+                  <p className="text-accent text-sm font-medium mt-2">
+                    elevatecopilot@outlook.com
+                  </p>
+                </div>
+                
+                <p className="text-xs text-muted">
+                  Group booking discounts available — please contact us.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -10,6 +10,7 @@ const Header = () => {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Courses', href: '/courses' },
+    { name: 'Bundles', href: '/courses#course-bundles' },
     { name: 'Corporate Training', href: '/corporate-training' },
     { name: 'Certification', href: '/certification' },
     { name: 'Resources', href: '/resources' },

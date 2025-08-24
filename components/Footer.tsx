@@ -7,6 +7,7 @@ const Footer = () => {
       title: "Training",
       links: [
         { name: "Courses", href: "/courses" },
+        { name: "Bundles", href: "/courses#course-bundles" },
         { name: "Corporate Training", href: "/corporate-training" },
         { name: "Certification", href: "/certification" },
         { name: "Resources", href: "/resources" },
