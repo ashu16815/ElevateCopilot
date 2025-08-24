@@ -86,7 +86,7 @@ export default function ContactPage() {
       // Add web3forms specific fields
       formDataToSend.append('access_key', 'be6ff4a1-4ba7-45b1-ba03-4b1137ca0574')
       formDataToSend.append('subject', `Training Interest: ${formData.course} - ${formData.firstName} ${formData.lastName}`)
-      formDataToSend.append('to', 'info@elevatecopilot.com')
+      formDataToSend.append('to', 'elevatecopilot@outlook.com')
       formDataToSend.append('from_name', 'ElevateCopilot Contact Form')
 
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -326,8 +326,8 @@ export default function ContactPage() {
               <Mail className="h-12 w-12 text-accent mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-primary mb-2">Email</h3>
               <p className="text-muted">
-                <a href="mailto:info@elevatecopilot.com" className="text-accent hover:underline">
-                  info@elevatecopilot.com
+                <a href="mailto:elevatecopilot@outlook.com" className="text-accent hover:underline">
+                  elevatecopilot@outlook.com
                 </a>
               </p>
             </div>

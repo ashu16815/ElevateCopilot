@@ -32,7 +32,7 @@ const Hero = () => {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/schedule"
+                href="/courses"
                 className="bg-accent hover:bg-accent/90 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center justify-center group"
               >
                 Join a Live Session

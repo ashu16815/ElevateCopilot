@@ -73,8 +73,8 @@ const CoursesPage = async () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {courses.map((course) => (
-              <div key={course.id} id={course.slug} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-                <div className="p-8">
+              <div key={course.id} id={course.slug} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col min-h-[560px]">
+                <div className="p-8 flex flex-col h-full">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-6">
                     <div className="space-y-2">
@@ -84,16 +84,6 @@ const CoursesPage = async () => {
                       <h3 className="text-2xl font-bold text-primary">
                         {course.title}
                       </h3>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-bold text-accent">
-                        NZ${course.price_nzd}
-                      </div>
-                      {course.price_private_nzd && (
-                        <div className="text-sm text-muted">
-                          Private: NZ${course.price_private_nzd}
-                        </div>
-                      )}
                     </div>
                   </div>
 
@@ -141,15 +131,30 @@ const CoursesPage = async () => {
                     </ul>
                   </div>
 
-                  {/* CTA Button */}
-                  <div className="text-center">
-                    <Link
-                      href={course.cta.href}
-                      className="btn-primary w-full flex items-center justify-center group"
-                    >
-                      {course.cta.label}
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                    </Link>
+                  {/* Price and CTA Tray - Fixed at bottom */}
+                  <div className="mt-auto space-y-3 pt-4 border-t border-gray-100">
+                    {/* Price */}
+                    <div className="text-center">
+                      <div className="text-2xl font-extrabold leading-none text-accent">
+                        NZ${course.price_nzd}
+                      </div>
+                      {course.price_private_nzd && (
+                        <div className="text-sm text-muted mt-1">
+                          Private: NZ${course.price_private_nzd}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="text-center">
+                      <Link
+                        href={course.cta.href}
+                        className="btn-primary w-full flex items-center justify-center group"
+                      >
+                        {course.cta.label}
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
