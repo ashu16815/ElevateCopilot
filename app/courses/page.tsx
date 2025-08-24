@@ -1,117 +1,80 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { 
-  Clock, 
-  Users, 
-  Award, 
-  CheckCircle, 
-  Star,
-  Calendar,
-  MapPin,
-  ArrowRight,
-  DollarSign
-} from 'lucide-react'
-import { CourseRepository } from '@/lib/repositories/courseRepository'
-import { SessionRepository } from '@/lib/repositories/courseRepository'
+import { ArrowRight, Clock, Users, Award, Building } from 'lucide-react'
+import { getAllCourses } from '@/lib/database/db'
 
 export const metadata: Metadata = {
   title: 'Training Courses - ElevateCopilot',
-  description: 'Explore our comprehensive Microsoft Copilot training programs. From masterclasses to certification courses, find the perfect program for your skill level.',
-  keywords: ['Microsoft Copilot courses', 'AI training', 'productivity courses', 'certification programs', 'online training'],
+  description: 'Choose your path to Microsoft Copilot mastery. Every course includes practice materials, a certificate, and a LinkedIn-shareable badge.',
+  keywords: ['Microsoft Copilot training', 'Copilot courses', 'AI productivity training', 'Copilot certification'],
 }
 
-const CoursesPage = async () => {
-  const courses = CourseRepository.getActiveCourses()
-
-  const getLevelColor = (level: string) => {
-    switch (level.toLowerCase()) {
-      case 'beginner':
-        return 'bg-green-100 text-green-800'
-      case 'intermediate':
-        return 'bg-yellow-100 text-yellow-800'
-      case 'advanced':
-        return 'bg-red-100 text-red-800'
-      case 'leadership':
-        return 'bg-purple-100 text-purple-800'
-      default:
-        return 'bg-gray-100 text-gray-800'
-    }
-  }
-
-  const getModeColor = (mode: string) => {
-    if (mode.includes('Online')) return 'bg-blue-100 text-blue-800'
-    if (mode.includes('Hybrid')) return 'bg-purple-100 text-purple-800'
-    if (mode.includes('In-Person')) return 'bg-green-100 text-green-800'
-    return 'bg-gray-100 text-gray-800'
-  }
+export default async function CoursesPage() {
+  const courses = await getAllCourses()
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/90 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 font-playfair">
-            Training Programs
-          </h1>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            Master Microsoft Copilot with our expert-led training programs designed for every skill level
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-playfair">
+              Choose Your Path
+            </h1>
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+              Every course includes practice materials, a certificate, and a LinkedIn-shareable badge.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="btn-secondary px-8 py-3"
+              >
+                Get Personalized Guidance
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Courses Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-primary mb-4">
-              Choose Your Learning Path
-            </h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto">
-              From quick masterclasses to comprehensive certification programs, we have the perfect training for your needs
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {courses.map((course) => (
-              <div key={course.id} id={course.slug} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col min-h-[560px]">
-                <div className="p-8 flex flex-col h-full">
+              <div key={course.id} id={course.slug} className="flex h-full flex-col rounded-2xl bg-white shadow-sm p-6 min-h-[560px]">
+                <div className="flex-1 space-y-5">
                   {/* Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="space-y-2">
-                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${getModeColor(course.mode)}`}>
-                        {course.mode}
-                      </span>
-                      <h3 className="text-2xl font-bold text-primary">
-                        {course.title}
-                      </h3>
+                  <div className="text-center">
+                    <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-3">
+                      {course.level}
                     </div>
+                    <h2 className="text-2xl font-bold text-primary mb-2 font-playfair">
+                      {course.title}
+                    </h2>
+                    <p className="text-muted text-lg">
+                      {course.tagline}
+                    </p>
                   </div>
 
-                  {/* Tagline */}
-                  <p className="text-muted mb-6 italic">
-                    {course.tagline}
-                  </p>
-
                   {/* Course Details */}
-                  <div className="flex items-center space-x-6 mb-6 text-sm text-muted">
-                    <div className="flex items-center">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="flex items-center text-muted">
                       <Clock className="h-4 w-4 mr-2" />
                       {course.duration}
                     </div>
-                    <div className="flex items-center">
-                      <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>
-                        {course.level}
-                      </span>
+                    <div className="flex items-center text-muted">
+                      <Building className="h-4 w-4 mr-2" />
+                      {course.mode}
                     </div>
                   </div>
 
                   {/* What You'll Learn */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-primary mb-3">What You'll Learn:</h4>
-                    <ul className="space-y-2">
+                  <div>
+                    <h3 className="font-semibold text-primary mb-3">What You'll Learn:</h3>
+                    <ul className="space-y-3">
                       {course.learn.map((item, index) => (
-                        <li key={index} className="flex items-start text-sm text-muted">
-                          <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <li key={index} className="flex items-start text-muted">
+                          <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
                           {item}
                         </li>
                       ))}
@@ -119,43 +82,34 @@ const CoursesPage = async () => {
                   </div>
 
                   {/* Key Takeaways */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-primary mb-3">Key Takeaways:</h4>
-                    <ul className="space-y-2">
+                  <div>
+                    <h3 className="font-semibold text-primary mb-3">Key Takeaways:</h3>
+                    <ul className="space-y-3">
                       {course.takeaways.map((item, index) => (
-                        <li key={index} className="flex items-start text-sm text-muted">
-                          <Star className="h-4 w-4 text-accent mr-2 mt-0.5 flex-shrink-0" />
+                        <li key={index} className="flex items-start text-muted">
+                          <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
+                </div>
 
-                  {/* Price and CTA Tray - Fixed at bottom */}
-                  <div className="mt-auto space-y-3 pt-4 border-t border-gray-100">
-                    {/* Price */}
-                    <div className="text-center">
-                      <div className="text-2xl font-extrabold leading-none text-accent">
-                        NZ${course.price_nzd}
-                      </div>
-                      {course.price_private_nzd && (
-                        <div className="text-sm text-muted mt-1">
-                          Private: NZ${course.price_private_nzd}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* CTA Button */}
-                    <div className="text-center">
-                      <Link
-                        href={course.cta.href}
-                        className="btn-primary w-full flex items-center justify-center group"
-                      >
-                        {course.cta.label}
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                      </Link>
-                    </div>
+                {/* Footer Tray - Price and CTA */}
+                <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between gap-4 flex-wrap">
+                  {/* Price */}
+                  <div className="text-2xl font-extrabold leading-none text-slate-900 whitespace-nowrap">
+                    NZ${course.price_nzd}
                   </div>
+                  
+                  {/* CTA Button */}
+                  <Link
+                    href={course.cta.href}
+                    className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold bg-[#C6A664] text-white hover:opacity-90 w-full sm:w-auto"
+                  >
+                    {course.cta.label}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </div>
               </div>
             ))}
@@ -164,24 +118,24 @@ const CoursesPage = async () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-white">
+      <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair">
+          <h2 className="text-3xl font-bold text-primary mb-6 font-playfair">
             Ready to Transform Your Productivity?
           </h2>
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who have already mastered Microsoft Copilot with our proven training programs.
+          <p className="text-xl text-muted mb-8 max-w-2xl mx-auto">
+            Join hundreds of professionals who've already mastered Microsoft Copilot and are seeing measurable results in their daily work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="btn-secondary px-8 py-4 text-lg font-semibold"
+              className="btn-primary px-8 py-3"
             >
-              Register Interest
+              Get Started Today
             </Link>
             <Link
               href="/corporate-training"
-              className="btn-outline-white px-8 py-4 text-lg font-semibold"
+              className="btn-secondary px-8 py-3"
             >
               Corporate Training
             </Link>
@@ -191,5 +145,3 @@ const CoursesPage = async () => {
     </div>
   )
 }
-
-export default CoursesPage

@@ -44,8 +44,11 @@ const Offerings = ({ featuredCourses }: OfferingsProps) => {
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-playfair">
             Our Programs
           </h2>
-          <p className="text-xl text-muted max-w-3xl mx-auto">
+          <p className="text-xl text-muted max-w-3xl mx-auto mb-4">
             Choose from our carefully crafted training programs designed to accelerate your Copilot journey
+          </p>
+          <p className="text-lg text-muted max-w-4xl mx-auto">
+            Every course includes practice materials, a certificate, and a LinkedIn-shareable badge.
           </p>
         </div>
 

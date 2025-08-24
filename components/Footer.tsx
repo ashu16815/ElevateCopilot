@@ -3,13 +3,23 @@ import { Linkedin, Youtube, Mail, Phone, Globe } from 'lucide-react'
 
 const Footer = () => {
   const footerLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Courses', href: '/courses' },
-    { name: 'Corporate Training', href: '/corporate-training' },
-    { name: 'Certification', href: '/certification' },
-
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    {
+      title: "Training",
+      links: [
+        { name: "Courses", href: "/courses" },
+        { name: "Corporate Training", href: "/corporate-training" },
+        { name: "Certification", href: "/certification" },
+        { name: "Blog", href: "/blog" },
+      ]
+    },
+    {
+      title: "Company",
+      links: [
+        { name: "About", href: "/about" },
+        { name: "FAQ", href: "/faq" },
+        { name: "Contact", href: "/contact" },
+      ]
+    }
   ]
 
   const socialLinks = [
@@ -50,9 +60,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 font-playfair">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 font-playfair">Training</h3>
             <ul className="space-y-2">
-              {footerLinks.slice(0, 4).map((link) => (
+              {footerLinks[0].links.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -67,9 +77,9 @@ const Footer = () => {
 
           {/* More Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 font-playfair">More</h3>
+            <h3 className="text-lg font-semibold mb-4 font-playfair">Company</h3>
             <ul className="space-y-2">
-              {footerLinks.slice(4).map((link) => (
+              {footerLinks[1].links.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
