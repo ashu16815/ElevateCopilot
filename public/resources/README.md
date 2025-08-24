@@ -4,7 +4,7 @@ This directory contains downloadable resources for the ElevateCopilot platform.
 
 ## File Structure
 
-The following resources are referenced in the resources page:
+The following resources are referenced in the resources page and point to enriched files in `/elevatecopilot_resources_detailed/`:
 
 ### Free Downloads (Ungated)
 - `day1-copilot-playbook.pdf` - Day-1 Copilot Playbook
