@@ -1,11 +1,9 @@
-import { Metadata } from 'next'
+'use client'
+
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'FAQ - ElevateCopilot',
-  description: 'Frequently asked questions about ElevateCopilot training programs, certification, and Microsoft Copilot courses.',
-}
+
 
 const FAQPage = () => {
   const faqs = [
