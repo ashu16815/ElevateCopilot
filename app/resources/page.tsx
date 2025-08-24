@@ -201,10 +201,13 @@ export default function ResourcesPage() {
                 {/* Download Button */}
                 <div className="flex items-center justify-between">
                   {resource.isGated ? (
-                    <button className="flex items-center px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors text-sm font-medium">
+                    <Link
+                      href="/contact"
+                      className="flex items-center px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors text-sm font-medium"
+                    >
                       <Lock className="h-4 w-4 mr-2" />
                       Get Access
-                    </button>
+                    </Link>
                   ) : (
                     <a
                       href={resource.download_path}
@@ -217,7 +220,7 @@ export default function ResourcesPage() {
                   )}
                   
                   <div className="text-xs text-muted">
-                    {resource.isGated ? 'Form required' : 'Instant download'}
+                    {resource.isGated ? 'Contact us to unlock' : 'Instant download'}
                   </div>
                 </div>
               </div>
