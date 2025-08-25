@@ -49,6 +49,22 @@ export default function ContactPage() {
     loadData()
   }, [])
 
+  // Check for referral code in URL and pre-fill form
+  useEffect(() => {
+    const ref = searchParams.get('ref');
+    if (ref && ref.trim() !== '') {
+      setFormData(prev => ({
+        ...prev,
+        referral_code: ref.trim()
+      }));
+      
+      // Trigger validation for the referral code
+      if (ref.trim()) {
+        validateReferralCode(ref.trim());
+      }
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     // Pre-fill form if course slug is provided
     if (courseSlug && courses.length > 0) {

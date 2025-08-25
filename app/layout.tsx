@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ReferralProvider from '@/components/ReferralProvider'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -71,6 +72,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ReferralProvider />
       </body>
     </html>
   )
