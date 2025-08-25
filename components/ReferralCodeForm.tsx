@@ -8,6 +8,8 @@ export default function ReferralCodeForm() {
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isExistingCode, setIsExistingCode] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   async function createCode() {
     if (!email.trim()) {
@@ -38,6 +40,8 @@ export default function ReferralCodeForm() {
       }
       
       setCode(data.code);
+      setIsExistingCode(data.isExisting || false);
+      setMessage(data.message || null);
     } catch (err) {
       setError('Failed to generate code. Please try again.');
     } finally {
@@ -100,12 +104,31 @@ export default function ReferralCodeForm() {
       )}
       
       {code && (
-        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <p className="text-sm text-green-800 mb-3">Your referral code:</p>
-          <div className="font-mono text-xl font-bold text-primary bg-white px-4 py-3 rounded-lg border-2 border-green-300 text-center">
+        <div className={`mt-6 p-4 rounded-lg border-2 text-center ${
+          isExistingCode 
+            ? 'bg-blue-50 border-blue-200' 
+            : 'bg-green-50 border-green-200'
+        }`}>
+          <p className={`text-sm mb-3 ${
+            isExistingCode ? 'text-blue-800' : 'text-green-800'
+          }`}>
+            {isExistingCode ? 'Your existing referral code:' : 'Your new referral code:'}
+          </p>
+          <div className={`font-mono text-xl font-bold text-primary bg-white px-4 py-3 rounded-lg border-2 text-center ${
+            isExistingCode ? 'border-blue-300' : 'border-green-300'
+          }`}>
             {code}
           </div>
-          <p className="text-xs text-green-700 mt-3 text-center">
+          {message && (
+            <p className={`text-xs mt-3 ${
+              isExistingCode ? 'text-blue-700' : 'text-green-700'
+            }`}>
+              {message}
+            </p>
+          )}
+          <p className={`text-xs mt-2 ${
+            isExistingCode ? 'text-blue-600' : 'text-green-700'
+          }`}>
             Share this code with friends and colleagues to earn rewards!
           </p>
         </div>

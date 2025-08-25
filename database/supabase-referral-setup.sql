@@ -1,0 +1,235 @@
+-- ===== ElevateCopilot Referral Program: EMAIL-LINKED USERS + SECURE RPCs =====
+-- Run this SQL in your Supabase SQL Editor to set up the referral program
+-- Project: vpxfryjezpkehjfspsvu
+
+-- 1) EXTENSIONS
+create extension if not exists pgcrypto;
+
+-- 2) USERS TABLE (email is case-insensitive unique)
+create table if not exists public.users (
+  id uuid primary key default gen_random_uuid(),
+  email text not null unique,
+  full_name text,
+  created_at timestamptz not null default now()
+);
+create unique index if not exists users_email_lower_uniq on public.users (lower(email));
+
+-- 3) REFERRAL CODES TABLE
+create table if not exists public.referral_codes (
+  code text primary key,
+  owner_id uuid not null references public.users(id) on delete cascade,
+  active boolean not null default true,
+  created_at timestamptz not null default now()
+);
+create index if not exists idx_referral_codes_owner on public.referral_codes(owner_id);
+
+-- 4) PURCHASES TABLE
+create table if not exists public.purchases (
+  id uuid primary key default gen_random_uuid(),
+  buyer_email text not null,
+  course_slug text not null,
+  list_price_usd numeric(10,2) not null,
+  discount_usd numeric(10,2) not null default 0,
+  amount_paid_usd numeric(10,2) not null,
+  referral_code text references public.referral_codes(code),
+  referrer_reward_usd numeric(10,2) not null default 0,
+  status text not null default 'recorded',
+  meta jsonb default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+create index if not exists idx_purchases_refcode on public.purchases(referral_code);
+
+-- 5) PAYOUTS TABLE
+create table if not exists public.payouts (
+  id uuid primary key default gen_random_uuid(),
+  referrer_id uuid not null references public.users(id) on delete cascade,
+  purchase_id uuid not null references public.purchases(id) on delete cascade,
+  amount_usd numeric(10,2) not null,
+  status text not null default 'pending',
+  created_at timestamptz not null default now(),
+  paid_at timestamptz
+);
+create index if not exists idx_payouts_referrer on public.payouts(referrer_id);
+
+-- 6) ROW LEVEL SECURITY (RLS)
+alter table public.users enable row level security;
+alter table public.referral_codes enable row level security;
+alter table public.purchases enable row level security;
+alter table public.payouts enable row level security;
+
+-- Keep tables private by default (we'll expose via RPCs/views)
+revoke all on table public.users from anon;
+revoke all on table public.referral_codes from anon;
+revoke all on table public.purchases from anon;
+revoke all on table public.payouts from anon;
+
+-- 7) HELPER FUNCTIONS
+
+-- Generate unique referral codes (EC-XXXXXX format)
+create or replace function public.gen_referral_code()
+returns text as $$ 
+  select 'EC-' || substr(encode(gen_random_bytes(6),'hex'),1,6); 
+$$ language sql stable;
+
+-- Upsert user by email (create if new, update if exists)
+create or replace function public.upsert_user_by_email(p_email text, p_full_name text default null)
+returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare 
+  v_id uuid; 
+  v_email text := trim(p_email);
+begin
+  if v_email is null or v_email = '' then
+    raise exception 'Email required';
+  end if;
+  
+  select id into v_id from public.users where lower(email)=lower(v_email) limit 1;
+  
+  if v_id is null then
+    insert into public.users(email, full_name) values (v_email, p_full_name) returning id into v_id;
+  elsif p_full_name is not null then
+    update public.users set full_name = coalesce(full_name, p_full_name) where id = v_id;
+  end if;
+  
+  return v_id;
+end $$;
+grant execute on function public.upsert_user_by_email(text, text) to anon;
+
+-- 8) CORE REFERRAL FUNCTIONS
+
+-- Create referral code by email (main function for the API)
+create or replace function public.create_referral_code_by_email(p_email text, p_full_name text default null)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare 
+  v_owner uuid; 
+  c text;
+begin
+  -- Get or create user
+  v_owner := public.upsert_user_by_email(p_email, p_full_name);
+  
+  -- Generate unique code
+  loop
+    c := public.gen_referral_code();
+    exit when not exists (select 1 from public.referral_codes where code=c);
+  end loop;
+  
+  -- Insert the referral code
+  insert into public.referral_codes(code, owner_id) values (c, v_owner);
+  
+  return c;
+end $$;
+grant execute on function public.create_referral_code_by_email(text, text) to anon;
+
+-- Redeem referral code during purchase (10% off buyer + 10% reward of amount paid)
+create or replace function public.redeem_referral(
+  p_buyer_email text,
+  p_course_slug text,
+  p_list_price numeric,
+  p_referral_code text
+) returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_discount numeric := 0;
+  v_paid     numeric := p_list_price;
+  v_referrer uuid;
+  v_reward   numeric := 0;
+  v_purchase uuid;
+  v_code_active boolean := false;
+begin
+  -- Validate input
+  if p_list_price is null or p_list_price <= 0 then 
+    raise exception 'Invalid list price'; 
+  end if;
+
+  -- Check referral code if provided
+  if p_referral_code is not null and p_referral_code <> '' then
+    select owner_id, active into v_referrer, v_code_active
+      from public.referral_codes where code = p_referral_code limit 1;
+      
+    if v_referrer is not null and v_code_active then
+      -- Calculate 10% discount and reward
+      v_discount := round(p_list_price * 0.10, 2);
+      v_paid     := round(p_list_price - v_discount, 2);
+      v_reward   := round(v_paid * 0.10, 2);
+    end if;
+  end if;
+
+  -- Record the purchase
+  insert into public.purchases(
+    buyer_email, course_slug, list_price_usd, discount_usd, amount_paid_usd, 
+    referral_code, referrer_reward_usd, status
+  ) values (
+    trim(p_buyer_email), p_course_slug, p_list_price, v_discount, v_paid, 
+    p_referral_code, v_reward, 'recorded'
+  ) returning id into v_purchase;
+
+  -- Create payout record if referral was used
+  if v_referrer is not null and v_reward > 0 then
+    insert into public.payouts(referrer_id, purchase_id, amount_usd) 
+    values (v_referrer, v_purchase, v_reward);
+  end if;
+
+  return v_purchase;
+end $$;
+grant execute on function public.redeem_referral(text, text, numeric, text) to anon;
+
+-- 9) VIEWS for user dashboards
+
+-- View to fetch a user's referral codes
+create or replace view public.v_user_codes as
+select 
+  u.email, 
+  u.full_name, 
+  r.code, 
+  r.active, 
+  r.created_at
+from public.users u
+left join public.referral_codes r on r.owner_id = u.id;
+
+-- View to fetch a user's total rewards earned
+create or replace view public.v_user_rewards as
+select 
+  u.email, 
+  coalesce(sum(p.amount_usd),0) as total_rewards
+from public.users u
+left join public.payouts p on p.referrer_id = u.id
+group by u.email;
+
+-- 10) SAMPLE DATA (optional - for testing)
+
+-- Insert a test user (uncomment to use)
+-- insert into public.users (email, full_name) values ('test@example.com', 'Test User');
+
+-- 11) VERIFICATION QUERIES
+
+-- Check if tables were created
+-- select table_name from information_schema.tables where table_schema = 'public' and table_name in ('users', 'referral_codes', 'purchases', 'payouts');
+
+-- Check if functions were created
+-- select routine_name from information_schema.routines where routine_schema = 'public' and routine_name in ('create_referral_code_by_email', 'redeem_referral', 'upsert_user_by_email');
+
+-- Check if views were created
+-- select table_name from information_schema.views where table_schema = 'public' and table_name in ('v_user_codes', 'v_user_rewards');
+
+-- ===== END OF SETUP =====
+-- 
+-- After running this SQL:
+-- 1. Your referral program database is ready
+-- 2. API endpoints will work properly
+-- 3. Users can generate referral codes at /referrals
+-- 4. System will track purchases and rewards automatically
+--
+-- Business Logic:
+-- - Buyers get 10% discount using referral codes
+-- - Referrers earn 10% cashback on amount actually paid
+-- - Example: $199 course → Friend pays $179.10, you earn $17.91

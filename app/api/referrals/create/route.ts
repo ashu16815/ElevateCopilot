@@ -13,17 +13,41 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'email required' }, { status: 400 });
     }
 
+    // First, check if user already has a referral code
+    const { data: existingCode, error: checkError } = await supabase.rpc('get_user_referral_code', { 
+      p_email: email 
+    });
+    
+    if (checkError) {
+      console.error('Check existing code error:', checkError);
+      return NextResponse.json({ error: checkError.message }, { status: 400 });
+    }
+
+    // If user already has a code, return it
+    if (existingCode) {
+      return NextResponse.json({ 
+        code: existingCode, 
+        message: 'Existing referral code retrieved',
+        isExisting: true 
+      });
+    }
+
+    // If no existing code, create a new one
     const { data, error } = await supabase.rpc('create_referral_code_by_email', { 
       p_email: email, 
       p_full_name: full_name || null 
     });
     
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Create code error:', error);
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ code: data });
+    return NextResponse.json({ 
+      code: data, 
+      message: 'New referral code created',
+      isExisting: false 
+    });
   } catch (error) {
     console.error('API error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
