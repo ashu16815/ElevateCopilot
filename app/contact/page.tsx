@@ -417,7 +417,7 @@ export default function ContactPage() {
                 )}
                 
                 <p className="text-sm text-muted mt-2">
-                  Have a referral code? Enter it to receive 10% off. Your referrer will earn 10% back when you purchase.
+                  Have a referral code? Enter it to receive 10% off. Your referrer will earn 10% cash back on your purchase. We pay out to bank accounts monthly.
                 </p>
               </div>
 

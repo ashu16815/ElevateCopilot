@@ -3,7 +3,11 @@
 import React, { useState } from 'react';
 import ShareReferral from './ShareReferral';
 
-export default function ReferralCodeForm() {
+interface ReferralCodeFormProps {
+  onCreated?: (code: string) => void;
+}
+
+export default function ReferralCodeForm({ onCreated }: ReferralCodeFormProps) {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -43,6 +47,11 @@ export default function ReferralCodeForm() {
       setCode(data.code);
       setIsExistingCode(data.isExisting || false);
       setMessage(data.message || null);
+      
+      // Notify parent component that a code was created
+      if (onCreated) {
+        onCreated(data.code);
+      }
     } catch (err) {
       setError('Failed to generate code. Please try again.');
     } finally {

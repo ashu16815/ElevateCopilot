@@ -1,7 +1,11 @@
+'use client'
+
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Gift, Users, DollarSign, TrendingUp, Mail } from 'lucide-react'
 import ReferralCodeForm from '@/components/ReferralCodeForm'
+import ShareReferralBlock from '@/components/ShareReferralBlock'
+import { useState } from 'react'
 
 export const metadata: Metadata = {
   title: 'Referral Program - ElevateCopilot',
@@ -10,6 +14,8 @@ export const metadata: Metadata = {
 }
 
 export default function ReferralsPage() {
+  const [generatedCode, setGeneratedCode] = useState<string | null>(null);
+  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -97,8 +103,15 @@ export default function ReferralsPage() {
 
           {/* Referral Code Generator */}
           <div className="max-w-2xl mx-auto">
-            <ReferralCodeForm />
+            <ReferralCodeForm onCreated={setGeneratedCode} />
           </div>
+          
+          {/* Share Block - appears after code generation */}
+          {generatedCode && (
+            <div className="max-w-2xl mx-auto mt-8">
+              <ShareReferralBlock code={generatedCode} />
+            </div>
+          )}
         </div>
       </section>
 
@@ -129,11 +142,15 @@ export default function ReferralsPage() {
               <ul className="space-y-4 text-muted">
                 <li className="flex items-start">
                   <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                  Rewards accrue in your account; we batch payouts monthly.
+                  Rewards are transferred <strong>directly to your bank account</strong> monthly.
                 </li>
                 <li className="flex items-start">
                   <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                  Or you can use them as credit for future courses.
+                  Or you can opt to apply rewards as credit for future courses.
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-accent rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                  You earn 10% cash back on the <em>amount actually paid</em> by your referrals.
                 </li>
               </ul>
             </div>
