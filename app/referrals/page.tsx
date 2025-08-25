@@ -1,17 +1,10 @@
 'use client'
 
-import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Gift, Users, DollarSign, TrendingUp, Mail } from 'lucide-react'
 import ReferralCodeForm from '@/components/ReferralCodeForm'
 import ShareReferralBlock from '@/components/ShareReferralBlock'
 import { useState } from 'react'
-
-export const metadata: Metadata = {
-  title: 'Referral Program - ElevateCopilot',
-  description: 'Give 10% off. Get 10% back. Share ElevateCopilot training with friends and colleagues to earn rewards.',
-  keywords: ['referral program', 'discount', 'cashback', 'training rewards', 'ElevateCopilot'],
-}
 
 export default function ReferralsPage() {
   const [generatedCode, setGeneratedCode] = useState<string | null>(null);
