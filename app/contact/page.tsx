@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Mail, MapPin, Clock, Calendar, Users, DollarSign, BookOpen, Target, MessageSquare, Building, Globe, Zap } from 'lucide-react'
 import { CourseRepository } from '@/lib/repositories/courseRepository'
@@ -21,6 +21,13 @@ export default function ContactPage() {
     goals: '',
     referral_code: '',
     consent: false
+  })
+
+  const [referralValidation, setReferralValidation] = useState({
+    isValid: false,
+    message: '',
+    referrerName: '',
+    isChecking: false
   })
 
   const [courses, setCourses] = useState<Course[]>([])
@@ -64,8 +71,89 @@ export default function ContactPage() {
     }))
   }
 
+  const validateReferralCode = useCallback(async (code: string) => {
+    if (!code || code.trim() === '') {
+      setReferralValidation({
+        isValid: false,
+        message: '',
+        referrerName: '',
+        isChecking: false
+      });
+      return;
+    }
+
+    setReferralValidation(prev => ({ ...prev, isChecking: true }));
+
+    try {
+      const response = await fetch('/api/referrals/validate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ referral_code: code.trim() })
+      });
+
+      const data = await response.json();
+
+      if (data.valid) {
+        setReferralValidation({
+          isValid: true,
+          message: data.message,
+          referrerName: data.referrer_name || 'Unknown',
+          isChecking: false
+        });
+      } else {
+        setReferralValidation({
+          isValid: false,
+          message: data.message,
+          referrerName: '',
+          isChecking: false
+        });
+      }
+    } catch (error) {
+      setReferralValidation({
+        isValid: false,
+        message: 'Error validating referral code',
+        referrerName: '',
+        isChecking: false
+      });
+    }
+  }, [])
+
+  // Debounced validation effect
+  useEffect(() => {
+    if (!formData.referral_code.trim()) {
+      setReferralValidation({
+        isValid: false,
+        message: '',
+        referrerName: '',
+        isChecking: false
+      });
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      validateReferralCode(formData.referral_code);
+    }, 500); // Wait 500ms after user stops typing
+
+    return () => clearTimeout(timeoutId);
+  }, [formData.referral_code, validateReferralCode]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    
+    // Validate referral code if provided
+    if (formData.referral_code.trim() && !referralValidation.isValid) {
+      setSubmitResult('Please enter a valid referral code or remove it to continue.')
+      return
+    }
+    
+    // Wait for validation to complete if still checking
+    if (formData.referral_code.trim() && referralValidation.isChecking) {
+      setSubmitResult('Please wait while we validate your referral code...')
+      return
+    }
+    
     setIsSubmitting(true)
     setSubmitResult('Sending...')
 
@@ -276,15 +364,58 @@ export default function ContactPage() {
                 <label htmlFor="referral_code" className="block text-sm font-medium text-primary mb-2">
                   Referral Code (optional)
                 </label>
-                <input
-                  type="text"
-                  id="referral_code"
-                  name="referral_code"
-                  value={formData.referral_code}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                  placeholder="Enter a code if you have one"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="referral_code"
+                    name="referral_code"
+                    value={formData.referral_code}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent ${
+                      referralValidation.isChecking 
+                        ? 'border-gray-300' 
+                        : referralValidation.isValid 
+                          ? 'border-green-500' 
+                          : referralValidation.message 
+                            ? 'border-red-500' 
+                            : 'border-gray-300'
+                    }`}
+                    placeholder="Enter a code if you have one"
+                  />
+                  {referralValidation.isChecking && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent"></div>
+                    </div>
+                  )}
+                  {referralValidation.isValid && !referralValidation.isChecking && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <div className="text-green-500">✓</div>
+                    </div>
+                  )}
+                  {!referralValidation.isValid && referralValidation.message && !referralValidation.isChecking && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <div className="text-red-500">✗</div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Validation Messages */}
+                {referralValidation.isValid && (
+                  <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-md">
+                    <p className="text-sm text-green-800">
+                      ✅ Valid referral code! You'll get 10% off and {referralValidation.referrerName} will earn 10% back.
+                    </p>
+                  </div>
+                )}
+                
+                {!referralValidation.isValid && referralValidation.message && (
+                  <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded-md">
+                    <p className="text-sm text-red-800">
+                      ❌ {referralValidation.message}
+                    </p>
+                  </div>
+                )}
+                
                 <p className="text-sm text-muted mt-2">
                   Have a referral code? Enter it to receive 10% off. Your referrer will earn 10% back when you purchase.
                 </p>
