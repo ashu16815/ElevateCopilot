@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import ShareReferral from './ShareReferral';
 
 export default function ReferralCodeForm() {
   const [email, setEmail] = useState('');
@@ -104,34 +105,39 @@ export default function ReferralCodeForm() {
       )}
       
       {code && (
-        <div className={`mt-6 p-4 rounded-lg border-2 text-center ${
-          isExistingCode 
-            ? 'bg-blue-50 border-blue-200' 
-            : 'bg-green-50 border-green-200'
-        }`}>
-          <p className={`text-sm mb-3 ${
-            isExistingCode ? 'text-blue-800' : 'text-green-800'
+        <>
+          <div className={`mt-6 p-4 rounded-lg border-2 text-center ${
+            isExistingCode 
+              ? 'bg-blue-50 border-blue-200' 
+              : 'bg-green-50 border-green-200'
           }`}>
-            {isExistingCode ? 'Your existing referral code:' : 'Your new referral code:'}
-          </p>
-          <div className={`font-mono text-xl font-bold text-primary bg-white px-4 py-3 rounded-lg border-2 text-center ${
-            isExistingCode ? 'border-blue-300' : 'border-green-300'
-          }`}>
-            {code}
-          </div>
-          {message && (
-            <p className={`text-xs mt-3 ${
-              isExistingCode ? 'text-blue-700' : 'text-green-700'
+            <p className={`text-sm mb-3 ${
+              isExistingCode ? 'text-blue-800' : 'text-green-800'
             }`}>
-              {message}
+              {isExistingCode ? 'Your existing referral code:' : 'Your new referral code:'}
             </p>
-          )}
-          <p className={`text-xs mt-2 ${
-            isExistingCode ? 'text-blue-600' : 'text-green-700'
-          }`}>
-            Share this code with friends and colleagues to earn rewards!
-          </p>
-        </div>
+            <div className={`font-mono text-xl font-bold text-primary bg-white px-4 py-3 rounded-lg border-2 text-center ${
+              isExistingCode ? 'border-blue-300' : 'border-green-300'
+            }`}>
+              {code}
+            </div>
+            {message && (
+              <p className={`text-xs mt-3 ${
+                isExistingCode ? 'text-blue-700' : 'text-green-700'
+              }`}>
+                {message}
+              </p>
+            )}
+            <p className={`text-xs mt-2 ${
+              isExistingCode ? 'text-blue-600' : 'text-green-700'
+            }`}>
+              Share this code with friends and colleagues to earn rewards!
+            </p>
+          </div>
+          
+          {/* Share Referral Section */}
+          <ShareReferral code={code} />
+        </>
       )}
     </div>
   );
