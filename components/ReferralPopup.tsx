@@ -20,6 +20,11 @@ export default function ReferralPopup({ referralCode, onClose }: ReferralPopupPr
   }, []);
 
   const handleGetDiscount = () => {
+    // Clear the referral parameter from URL to prevent re-triggering
+    const url = new URL(window.location.href);
+    url.searchParams.delete('ref');
+    window.history.replaceState({}, '', url.toString());
+    
     // Redirect to contact page with referral code pre-filled
     router.push(`/contact?ref=${referralCode}`);
     onClose();

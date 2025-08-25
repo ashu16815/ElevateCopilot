@@ -62,6 +62,13 @@ export default function ContactPage() {
       if (ref.trim()) {
         validateReferralCode(ref.trim());
       }
+      
+      // Mark this referral as shown to prevent popup from appearing again
+      const shownReferrals = JSON.parse(sessionStorage.getItem('shownReferrals') || '[]');
+      if (!shownReferrals.includes(ref.trim())) {
+        shownReferrals.push(ref.trim());
+        sessionStorage.setItem('shownReferrals', JSON.stringify(shownReferrals));
+      }
     }
   }, [searchParams]);
 
