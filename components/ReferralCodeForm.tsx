@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react';
-import ShareReferral from './ShareReferral';
 
 interface ReferralCodeFormProps {
   onCreated?: (code: string) => void;
@@ -144,8 +143,7 @@ export default function ReferralCodeForm({ onCreated }: ReferralCodeFormProps) {
             </p>
           </div>
           
-          {/* Share Referral Section */}
-          <ShareReferral code={code} />
+
         </>
       )}
     </div>
