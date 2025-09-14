@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ReferralProvider from '@/components/ReferralProvider'
+import LinkedInInsight from '@/components/LinkedInInsight'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -73,6 +74,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ReferralProvider />
+        <LinkedInInsight />
       </body>
     </html>
   )
