@@ -3,9 +3,8 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import ReferralProvider from '@/components/ReferralProvider'
+import { AuthProvider } from '@/components/AuthProvider'
 import LinkedInInsight from '@/components/LinkedInInsight'
-import SiteAnnouncement from '@/components/SiteAnnouncement'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ 
@@ -70,15 +69,15 @@ export default function RootLayout({
         <meta name="theme-color" content="#0F172A" />
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
-        <SiteAnnouncement />
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <ReferralProvider />
-        <LinkedInInsight />
-        <Analytics />
+        <AuthProvider>
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <LinkedInInsight />
+          <Analytics />
+        </AuthProvider>
       </body>
     </html>
   )

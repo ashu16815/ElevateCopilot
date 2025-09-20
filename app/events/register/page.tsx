@@ -1,66 +1,62 @@
-import { Metadata } from 'next'
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Register for a Free Session - ElevateCopilot',
-  description: 'Register for our free AI literacy session. No cost, no sales pitch - just practical learning.',
+import RequireAuth from '@/components/RequireAuth';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+
+export default function Register() {
+  return (
+    <RequireAuth>
+      <RegisterInner />
+    </RequireAuth>
+  );
 }
 
-export default function RegisterPage() {
+function RegisterInner() {
+  const sp = useSearchParams();
+  const date = sp.get('date') || '';
+  const [msg, setMsg] = useState('');
+
+  async function submit() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setMsg('Not signed in');
+      return;
+    }
+
+    const { data: sess } = await supabase
+      .from('sessions')
+      .select('id')
+      .eq('starts_at', new Date(date).toISOString())
+      .maybeSingle();
+
+    const sid = sess?.id;
+    if (!sid) {
+      setMsg('Thanks! You are on the list—we will confirm your calendar invite.');
+      return;
+    }
+
+    const { error } = await supabase.rpc('register_for_session', {
+      p_session: sid,
+      p_answers: {}
+    });
+
+    setMsg(error ? error.message : '✅ Registered! Check your email for invite.');
+  }
+
   return (
-    <div className="container mx-auto max-w-2xl py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Register (Free)</h1>
+    <div className="max-w-md mx-auto px-6 py-12">
+      <h1 className="text-2xl font-bold">Register for {date || 'upcoming session'}</h1>
+      <p className="text-gray-600 mt-2">We'll email your calendar invite and materials.</p>
       
-      <form 
-        action="https://api.web3forms.com/submit" 
-        method="POST" 
-        className="mt-6 grid gap-4"
+      <button 
+        onClick={submit} 
+        className="mt-6 w-full px-4 py-2 rounded-md bg-amber-600 text-white hover:bg-amber-700"
       >
-        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY" />
-        
-        <input 
-          name="name" 
-          required 
-          placeholder="Full name" 
-          className="rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
-        />
-        
-        <input 
-          name="email" 
-          type="email" 
-          required 
-          placeholder="Work email" 
-          className="rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
-        />
-        
-        <input 
-          name="company" 
-          placeholder="Company (optional)" 
-          className="rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
-        />
-        
-        <input 
-          name="date" 
-          placeholder="Preferred date (YYYY-MM-DD)" 
-          className="rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
-        />
-        
-        <textarea 
-          name="questions" 
-          placeholder="What do you want to learn?" 
-          className="rounded-md border px-3 py-2 h-28 focus:outline-none focus:ring-2 focus:ring-amber-500"
-        />
-        
-        <button 
-          type="submit"
-          className="px-4 py-2 rounded-md bg-amber-600 text-white hover:bg-amber-700 transition-colors"
-        >
-          Register
-        </button>
-      </form>
-      
-      <p className="mt-3 text-sm text-gray-600">
-        We'll email your calendar invite and materials. Sessions run in NZT, via Teams/Zoom.
-      </p>
+        Confirm Registration
+      </button>
+      <p className="text-sm text-gray-600 mt-3">{msg}</p>
     </div>
-  )
+  );
 }

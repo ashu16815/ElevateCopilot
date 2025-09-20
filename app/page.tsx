@@ -1,52 +1,33 @@
-import { Metadata } from 'next'
-import Hero from '@/components/sections/Hero'
-import ValueProposition from '@/components/sections/ValueProposition'
-import Offerings from '@/components/sections/Offerings'
-import Certification from '@/components/sections/Certification'
-import Partnerships from '@/components/sections/Partnerships'
-import TrustSection from '@/components/sections/TrustSection'
-import Testimonials from '@/components/sections/Testimonials'
-import FinalCTA from '@/components/sections/FinalCTA'
-import Impact from '@/components/Impact'
+import { TARGET, MARKET } from '@/lib/site.config';
+import StatsBand from '@/components/StatsBand';
+import SessionExplainer from '@/components/SessionExplainer';
+import ResourcesPreview from '@/components/ResourcesPreview';
 
-export const metadata: Metadata = {
-  title: 'ElevateCopilot — AI Literacy for New Zealand (Free, Fortnightly)',
-  description: 'Open mission to train 1,000 professionals in NZ on practical, responsible AI. Free live sessions, resources, and community. Join and pass it on.',
-  keywords: ['AI literacy', 'Microsoft Copilot', 'New Zealand', 'free training', 'AI education', 'community'],
-  openGraph: {
-    title: 'ElevateCopilot — AI Literacy for New Zealand (Free, Fortnightly)',
-    description: 'Open mission to train 1,000 professionals in NZ on practical, responsible AI. Free live sessions, resources, and community.',
-    url: 'https://www.elevatecopilot.com',
-    siteName: 'ElevateCopilot',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'ElevateCopilot — AI Literacy for New Zealand (Free, Fortnightly)',
-    description: 'Open mission to train 1,000 professionals in NZ on practical, responsible AI. Free live sessions, resources, and community.',
-  },
-}
-
-export default async function Home() {
-  // Default course stats to avoid runtime errors
-  const courseStats = {
-    totalCourses: 4,
-    totalEnrollments: "1,247",
-    upcomingSessions: "10+",
-    averagePrice: "US$134"
-  }
-
+export default function Home() {
   return (
     <main>
-      <Hero />
-      <Impact />
-      <ValueProposition />
-      <Offerings featuredCourses={[]} />
-      <Certification />
-      <Partnerships />
-      <TrustSection />
-      <Testimonials />
-      <FinalCTA courseStats={courseStats} />
+      <section className="ec-hero">
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <h1 className="text-4xl md:text-6xl font-extrabold">
+            AI Literacy for {MARKET} — Free & Practical
+          </h1>
+          <p className="mt-4 text-lg text-blue-100 max-w-2xl">
+            Our mission: train {TARGET.toLocaleString()} professionals with practical, responsible AI skills — and help each pass it on to ten more.
+          </p>
+          <div className="mt-8">
+            <a 
+              className="ec-btn ec-btn-primary" 
+              href="/events"
+            >
+              Join the next free session
+            </a>
+          </div>
+        </div>
+      </section>
+      
+      <StatsBand />
+      <SessionExplainer />
+      <ResourcesPreview />
     </main>
-  )
+  );
 }

@@ -8,25 +8,15 @@ import { IS_MISSION } from '@/lib/mode'
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const navigation = IS_MISSION ? [
+  const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Learn Live (Free)', href: '/events' },
     { name: 'Resources', href: '/resources' },
     { name: 'Impact', href: '/impact' },
-    { name: 'Ambassadors', href: '/ambassadors' },
     { name: 'Mission', href: '/mission' },
-    { name: 'Press', href: '/press' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
-  ] : [
-    { name: 'Home', href: '/' },
-    { name: 'Courses', href: '/courses' },
-    { name: 'Corporate Training', href: '/corporate-training' },
-    { name: 'Certification', href: '/certification' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Referrals', href: '/referrals' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Founder', href: '/founder' },
+    { name: 'Sign in', href: '/auth' }
   ]
 
   return (
@@ -58,15 +48,6 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Link
-              href={IS_MISSION ? "/events" : "/courses"}
-              className="btn-primary"
-            >
-              {IS_MISSION ? "Join a Live Session" : "Join a Live Session"}
-            </Link>
-          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -94,15 +75,6 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            <div className="pt-4">
-              <Link
-                href={IS_MISSION ? "/events" : "/courses"}
-                className="btn-primary block text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {IS_MISSION ? "Join a Live Session" : "Join a Live Session"}
-              </Link>
-            </div>
           </div>
         </div>
       )}

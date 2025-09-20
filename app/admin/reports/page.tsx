@@ -45,7 +45,7 @@ const ReportsPage = () => {
       change: "+3%",
       changeType: "positive",
       icon: Calendar,
-      color: "orange"
+      color: "#C6A664"
     }
   ]
 

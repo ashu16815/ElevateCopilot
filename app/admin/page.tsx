@@ -79,7 +79,7 @@ const AdminDashboard = () => {
       description: "Analytics and insights",
       href: "/admin/reports",
       icon: TrendingUp,
-      color: "orange"
+      color: "#C6A664"
     }
   ]
 

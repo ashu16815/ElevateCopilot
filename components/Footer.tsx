@@ -4,24 +4,21 @@ import { Linkedin, Youtube, Mail, Phone, Globe } from 'lucide-react'
 const Footer = () => {
   const footerLinks = [
     {
-      title: "Training",
+      title: "Learn",
       links: [
-        { name: "Courses", href: "/courses" },
-        { name: "Bundles", href: "/courses#course-bundles" },
-        { name: "Corporate Training", href: "/corporate-training" },
-        { name: "Certification", href: "/certification" },
+        { name: "Free Sessions", href: "/events" },
         { name: "Resources", href: "/resources" },
         { name: "Blog", href: "/blog" },
+        { name: "Impact", href: "/impact" },
       ]
     },
     {
-      title: "Company",
+      title: "About",
       links: [
-        { name: "About", href: "/about" },
-        { name: "FAQ", href: "/faq" },
-        { name: "Referrals", href: "/referrals" },
+        { name: "Mission", href: "/mission" },
+        { name: "Founder", href: "/founder" },
         { name: "Contact", href: "/contact" },
-        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Privacy", href: "/privacy" },
       ]
     }
   ]
@@ -32,7 +29,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-[var(--ec-navy)] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -45,8 +42,9 @@ const Footer = () => {
                 ElevateCopilot
               </span>
             </div>
-            <p className="text-muted mb-4 max-w-md">
-              Learn Copilot. Lead with AI. Premium training & certification for professionals and teams worldwide.
+            <p className="text-gray-300 mb-4 max-w-md">
+              AI literacy for New Zealand — free, practical, and immediately applicable. 
+              Building the country's AI-ready workforce through community-driven learning.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
@@ -128,8 +126,8 @@ const Footer = () => {
                 elevatecopilot@outlook.com
               </a>
             </div>
-            <p className="text-muted text-sm">
-              © 2025 ElevateCopilot. All rights reserved.
+            <p className="text-gray-400 text-sm">
+              © 2024 ElevateCopilot. All rights reserved. Headquartered in New Zealand.
             </p>
           </div>
         </div>

@@ -228,7 +228,7 @@ const AdminSidebar = () => {
             </div>
             <div className="flex justify-between">
               <span>Pending Approvals:</span>
-              <span className="font-medium text-orange-600">5</span>
+              <span className="font-medium text-amber-600">5</span>
             </div>
             <div className="flex justify-between">
               <span>Today's Revenue:</span>

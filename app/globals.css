@@ -9,6 +9,13 @@
   --foreground-rgb: 15, 23, 42;
   --background-start-rgb: 248, 250, 252;
   --background-end-rgb: 255, 255, 255;
+
+  /* ElevateCopilot Design Tokens */
+  --ec-navy: #0F172A;
+  --ec-gold: #C6A664;
+  --ec-neutral: #F9FAFB;
+  --ec-text: #0B1220;
+  --ec-link: #3B82F6;
 }
 
 body {
@@ -25,7 +32,7 @@ body {
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
   }
-  
+
   body {
     font-family: 'Inter', sans-serif;
   }
@@ -35,12 +42,99 @@ body {
   .btn-primary {
     @apply bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
   }
-  
+
   .btn-secondary {
     @apply bg-white hover:bg-gray-50 text-primary border-2 border-accent font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
   }
-  
+
   .card {
     @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
+  }
+
+  /* ElevateCopilot Component Styles */
+  .ec-hero {
+    background: linear-gradient(180deg, var(--ec-navy), #1b2646);
+    color: #fff;
+  }
+
+  .ec-btn {
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.15s ease;
+  }
+
+  .ec-btn-primary {
+    background: var(--ec-gold);
+    color: #fff;
+  }
+
+  .ec-btn-primary:hover {
+    filter: brightness(0.95);
+  }
+
+  .ec-btn-secondary {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: var(--ec-text);
+    background: #fff;
+  }
+
+  .ec-btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+  }
+
+  .ec-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .ec-link {
+    color: var(--ec-link);
+  }
+
+  .ec-link:hover {
+    text-decoration: underline;
+  }
+
+  .ec-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .ec-stat-num {
+    color: var(--ec-gold);
+    font-weight: 800;
+    font-size: 1.75rem;
+  }
+
+  /* Kill legacy orange classes */
+  .btn-orange,
+  .button-orange,
+  .btn-warning,
+  .button-warning {
+    background: var(--ec-gold) !important;
+    color: #fff !important;
+    border-color: var(--ec-gold) !important;
+  }
+
+  .text-orange,
+  .link-orange {
+    color: var(--ec-gold) !important;
+  }
+
+  /* Focus states for accessibility */
+  .ec-btn:focus {
+    outline: 2px solid var(--ec-link);
+    outline-offset: 2px;
+  }
+
+  a:focus {
+    outline: 2px solid var(--ec-link);
+    outline-offset: 2px;
   }
 }

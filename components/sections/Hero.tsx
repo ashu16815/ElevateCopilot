@@ -21,13 +21,13 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="space-y-8">
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                {IS_MISSION ? 'AI Literacy for New Zealand — Free, Fortnightly' : 'Master Microsoft Copilot'}
+                {IS_MISSION ? 'Building AI Literacy in New Zealand — Free, Fortnightly' : 'Master Microsoft Copilot'}
               </h1>
-              <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
+              <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-4xl">
                 {IS_MISSION 
-                  ? 'ElevateCopilot is now an open mission: help 1,000 professionals master practical AI skills and pass them on to 10 others each. Join our live sessions, access resources, and be part of NZ\'s productivity leap.'
+                  ? 'Our mission: help 1,000 professionals master practical AI skills and pass them on to 10 others each. Free sessions, open resources, real impact.'
                   : 'Premium training & certification for professionals and teams worldwide.'
                 }
               </p>
@@ -37,16 +37,16 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href={IS_MISSION ? "/events" : "/courses"}
-                className="bg-accent hover:bg-accent/90 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center justify-center group"
+                className="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center justify-center group"
               >
-                {IS_MISSION ? 'Join the Next Live Session (Free)' : 'Join a Live Session'}
+                {IS_MISSION ? 'Join the Next Free Session' : 'Join a Live Session'}
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href={IS_MISSION ? "/mission" : "/corporate-training"}
+                href={IS_MISSION ? "/resources" : "/corporate-training"}
                 className="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 font-semibold py-4 px-8 rounded-lg transition-all duration-200 backdrop-blur-sm"
               >
-                {IS_MISSION ? 'Our Mission & Impact' : 'Corporate Training'}
+                {IS_MISSION ? 'Explore Resources' : 'Corporate Training'}
               </Link>
             </div>
 
