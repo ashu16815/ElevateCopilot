@@ -5,7 +5,7 @@ import { TARGET } from '@/lib/site.config';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function Impact() {
-  const [trained, setTrained] = useState<number>(0);
+  const [trained, setTrained] = useState<number>(57); // start at 57 instead of 0
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,12 +17,12 @@ export default function Impact() {
           .select('user_id', { count: 'exact', head: true });
         
         if (!error && typeof count === 'number') {
-          setTrained(count);
+          setTrained(57 + count); // add live registrations on top of 57 baseline
         }
       } catch (error) {
         console.error('Error loading trained count:', error);
-        // Fallback to 0 if there's an error
-        setTrained(0);
+        // Fallback to 57 if there's an error
+        setTrained(57);
       } finally {
         setLoading(false);
       }

@@ -33,13 +33,18 @@ export default function Auth() {
     }
     
     try {
+      // Use production URL for magic links, or localhost for development
+      const redirectUrl = process.env.NODE_ENV === 'production' 
+        ? 'https://elevatecopilot.com/auth/callback'
+        : window.location.origin + '/auth/callback';
+        
       console.log('Sending magic link to:', email);
-      console.log('Redirect URL:', window.location.origin + '/auth/callback');
-      
+      console.log('Redirect URL:', redirectUrl);
+        
       const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: window.location.origin + '/auth/callback'
+          emailRedirectTo: redirectUrl
         }
       });
       
