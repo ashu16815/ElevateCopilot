@@ -13,12 +13,13 @@ export default function LiveCounters() {
     (async () => {
       try {
         // Get trained count (57 + distinct registrations)
-        const c1 = await supabase
+        const { data: regData } = await supabase
           .from('session_registrations')
-          .select('user_id', { count: 'exact', head: true, distinct: true });
+          .select('user_id');
         
-        if (!c1.error && typeof c1.count === 'number') {
-          setTrained(57 + c1.count);
+        if (regData) {
+          const uniqueUsers = new Set(regData.map(r => r.user_id));
+          setTrained(57 + uniqueUsers.size);
         }
 
         // Get upcoming sessions count
