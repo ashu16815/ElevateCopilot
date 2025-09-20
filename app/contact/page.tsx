@@ -40,10 +40,10 @@ export default function Contact() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="card p-8">
-              <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
+              <h2 className="text-2xl font-bold mb-6 text-[var(--ec-text)]">Send us a message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-[var(--ec-text)] mb-2">
                     Name *
                   </label>
                   <input
@@ -53,13 +53,13 @@ export default function Contact() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--ec-gold)]"
                     placeholder="Your full name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-[var(--ec-text)] mb-2">
                     Email *
                   </label>
                   <input
@@ -69,13 +69,13 @@ export default function Contact() {
                     required
                     value={form.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--ec-gold)]"
                     placeholder="your.email@company.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-[var(--ec-text)] mb-2">
                     Message *
                   </label>
                   <textarea
@@ -85,13 +85,13 @@ export default function Contact() {
                     rows={5}
                     value={form.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--ec-gold)]"
                     placeholder="Tell us how we can help..."
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="referral_code" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="referral_code" className="block text-sm font-medium text-[var(--ec-text)] mb-2">
                     Referral Code (optional)
                   </label>
                   <input
@@ -100,7 +100,7 @@ export default function Contact() {
                     name="referral_code"
                     value={form.referral_code}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--ec-gold)]"
                     placeholder="If someone referred you, enter their code here"
                   />
                 </div>
@@ -123,16 +123,16 @@ export default function Contact() {
             {/* Contact Info */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
+                <h2 className="text-2xl font-bold mb-6 text-[var(--ec-text)]">Get in Touch</h2>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-8 h-8 bg-[var(--ec-gold)] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
                       📧
                     </div>
                     <div>
-                      <h3 className="font-semibold">Email</h3>
+                      <h3 className="font-semibold text-[var(--ec-text)]">Email</h3>
                       <p className="text-gray-700">
-                        <a href="mailto:elevatecopilot@outlook.com" className="text-amber-600 hover:text-amber-700">
+                        <a href="mailto:elevatecopilot@outlook.com" className="text-[var(--ec-text)] hover:text-[var(--ec-gold)]">
                           elevatecopilot@outlook.com
                         </a>
                       </p>
@@ -140,29 +140,29 @@ export default function Contact() {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-8 h-8 bg-[var(--ec-gold)] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
                       📍
                     </div>
                     <div>
-                      <h3 className="font-semibold">Headquarters</h3>
-                      <p className="text-gray-700">Headquartered in New Zealand</p>
+                      <h3 className="font-semibold text-[var(--ec-text)]">Headquarters</h3>
+                      <p className="text-[var(--ec-text)]">Headquartered in New Zealand</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-8 h-8 bg-[var(--ec-gold)] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
                       ⏰
                     </div>
                     <div>
-                      <h3 className="font-semibold">Response Time</h3>
-                      <p className="text-gray-700">We typically respond within 24 hours</p>
+                      <h3 className="font-semibold text-[var(--ec-text)]">Response Time</h3>
+                      <p className="text-[var(--ec-text)]">We typically respond within 24 hours</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="card p-6">
-                <h3 className="text-xl font-semibold mb-4">Partnership Opportunities</h3>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--ec-text)]">Partnership Opportunities</h3>
                 <p className="text-gray-700 mb-4">
                   Interested in bringing AI literacy training to your organization? We offer custom programs for teams and companies.
                 </p>
@@ -175,7 +175,7 @@ export default function Contact() {
               </div>
 
               <div className="card p-6">
-                <h3 className="text-xl font-semibold mb-4">Media & Press</h3>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--ec-text)]">Media & Press</h3>
                 <p className="text-gray-700 mb-4">
                   For media inquiries, please contact us with "Media Inquiry" in the subject line.
                 </p>
