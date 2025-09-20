@@ -12,7 +12,7 @@ export default function Impact() {
       // Count distinct users who have registered for any session
       const { data, error, count } = await supabase
         .from('session_registrations')
-        .select('user_id', { count: 'exact', head: true, distinct: true });
+        .select('user_id', { count: 'exact', head: true });
       
       if (!error && typeof count === 'number') {
         setTrained(count);
