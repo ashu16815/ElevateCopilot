@@ -14,7 +14,7 @@ export default function Auth() {
       email,
       options: {
         emailRedirectTo: typeof window !== 'undefined' 
-          ? window.location.origin + '/onboard' 
+          ? window.location.origin + '/auth/callback' 
           : undefined
       }
     });
