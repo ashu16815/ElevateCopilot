@@ -4,7 +4,7 @@ export default function Mission() {
   const goals = [
     {
       title: "Train 1,000 Professionals",
-      desc: "Equip New Zealand professionals with practical AI skills they can use immediately",
+      desc: "Our target: equip 1,000 New Zealand professionals with practical AI skills they can use immediately",
       icon: "👥"
     },
     {

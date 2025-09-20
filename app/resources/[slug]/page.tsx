@@ -3,6 +3,7 @@
 import RequireAuth from '@/components/RequireAuth';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function Resource() {
   const { slug } = useParams();
@@ -64,6 +65,14 @@ export default function Resource() {
   const handleDownload = async () => {
     setDownloading(true);
     try {
+      // Track download in database
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase
+          .from('download_events')
+          .insert([{ user_id: user.id, slug: String(slug) }]);
+      }
+
       // Create a temporary link to trigger download
       const link = document.createElement('a');
       link.href = r.href;

@@ -5,8 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 
 export default function UserMenu() {
   const [user, setUser] = useState<any>(null);
-  const [name, setName] = useState<string>('');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
@@ -14,14 +13,13 @@ export default function UserMenu() {
       setUser(user);
       
       if (user) {
-        const { data: p } = await supabase
+        const { data } = await supabase
           .from('profiles')
-          .select('full_name, is_admin, blocked')
+          .select('full_name, is_admin')
           .eq('user_id', user.id)
           .maybeSingle();
         
-        setName(p?.full_name || user.email || '');
-        setIsAdmin(!!p?.is_admin);
+        setProfile(data);
       }
     })();
   }, []);
@@ -30,27 +28,31 @@ export default function UserMenu() {
     return <a className="ec-link" href="/auth">Sign in</a>;
   }
 
+  const name = profile?.full_name || user.email;
+
   return (
-    <div className="relative group inline-flex items-center gap-2">
-      <span className="text-sm font-medium">{name}</span>
-      <div className="absolute right-0 top-full mt-2 hidden group-hover:block bg-white border rounded-lg shadow-md min-w-[180px] p-2 z-50">
-        <a className="block px-3 py-2 hover:bg-neutral-50 rounded" href="/account">
-          My profile
+    <div className="relative group">
+      <button className="text-sm font-medium hover:text-[var(--ec-gold)] transition-colors">
+        {name}
+      </button>
+      <div className="absolute right-0 top-full mt-2 hidden group-hover:block bg-white border rounded-lg shadow-md min-w-[190px] p-2 z-50">
+        <a className="block px-3 py-2 hover:bg-neutral-50 rounded" href="/dashboard">
+          My dashboard
         </a>
         <a className="block px-3 py-2 hover:bg-neutral-50 rounded" href="/resources">
           Resources
         </a>
-        {isAdmin && (
+        {profile?.is_admin && (
           <a className="block px-3 py-2 hover:bg-neutral-50 rounded" href="/admin">
             Admin
           </a>
         )}
         <button 
+          className="block w-full text-left px-3 py-2 hover:bg-neutral-50 rounded"
           onClick={async () => {
             await supabase.auth.signOut();
             location.href = '/';
-          }} 
-          className="block w-full text-left px-3 py-2 hover:bg-neutral-50 rounded"
+          }}
         >
           Sign out
         </button>

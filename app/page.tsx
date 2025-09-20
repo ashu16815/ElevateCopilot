@@ -1,5 +1,5 @@
 import { TARGET, MARKET } from '@/lib/site.config';
-import StatsBand from '@/components/StatsBand';
+import LiveCounters from '@/components/LiveCounters';
 import SessionExplainer from '@/components/SessionExplainer';
 import ResourcesPreview from '@/components/ResourcesPreview';
 
@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </section>
       
-      <StatsBand />
+      <LiveCounters />
       <SessionExplainer />
       <ResourcesPreview />
     </main>

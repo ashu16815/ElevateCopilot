@@ -103,18 +103,18 @@ export default function Blog() {
             {posts.map((post, index) => (
               <article key={index} className="ec-card p-6 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="px-2 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded">
+                  <span className="px-2 py-1 bg-[var(--ec-gold)] bg-opacity-20 text-[var(--ec-gold)] text-xs font-medium rounded">
                     {post.category}
-                  </span>
+                        </span>
                   <span className="text-sm text-gray-500">{post.readTime}</span>
                 </div>
                 
-                <h2 className="text-xl font-semibold mb-3 hover:text-amber-600 transition-colors">
-                  <a href={`/blog/${post.slug}`} className="ec-link">
+                <h2 className="text-xl font-semibold mb-3">
+                  <a href={`/blog/${post.slug}`} className="ec-link hover:text-[var(--ec-gold)] transition-colors">
                     {post.title}
                   </a>
                 </h2>
-                
+
                 <p className="text-gray-600 mb-4 line-clamp-3">
                   {post.excerpt}
                 </p>
@@ -127,15 +127,15 @@ export default function Blog() {
                       day: 'numeric' 
                     })}
                   </time>
-                  <a 
-                    href={`/blog/${post.slug}`} 
-                    className="ec-link font-medium hover:text-amber-700"
-                  >
-                    Read more →
-                  </a>
-                </div>
-              </article>
-            ))}
+                      <a 
+                        href={`/blog/${post.slug}`} 
+                        className="ec-readmore"
+                      >
+                        Read more →
+                      </a>
+                    </div>
+                  </article>
+                ))}
           </div>
         </div>
       </section>
