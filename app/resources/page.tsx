@@ -1,259 +1,97 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowLeft, Download, FileText, FileSpreadsheet, FileImage, FileCode, ExternalLink, Lock, Unlock } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Resource Library - ElevateCopilot',
-  description: 'Download free resources, templates, and tools to accelerate your Microsoft Copilot adoption and productivity gains.',
-  keywords: ['Copilot resources', 'templates', 'playbooks', 'ROI calculator', 'downloads', 'productivity tools'],
+  title: 'Open Resource Library - ElevateCopilot',
+  description: 'Download and share freely with attribution. Free AI literacy resources, prompts, and templates.',
 }
-
-const resources = [
-  {
-    slug: 'day1-playbook',
-    title: 'Day-1 Copilot Playbook',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/day1-copilot-playbook.pdf',
-    teaser: 'Get your team productive with Copilot in just one day. Step-by-step setup, first tasks, and quick wins.',
-    category: 'Getting Started',
-    isGated: false,
-    icon: FileText,
-    color: 'bg-blue-100 text-blue-800'
-  },
-  {
-    slug: 'meeting-deck-cheatsheet',
-    title: 'Meeting-to-Deck Workflow',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/meeting-to-deck-cheatsheet.pdf',
-    teaser: 'Transform meeting notes into polished presentations in minutes. Proven prompts and workflow templates.',
-    category: 'Productivity',
-    isGated: false,
-    icon: FileImage,
-    color: 'bg-green-100 text-green-800'
-  },
-  {
-    slug: 'roi-calculator',
-    title: 'Copilot ROI Calculator',
-    format: 'XLSX',
-    download_path: '/elevatecopilot_resources_detailed/copilot-roi-calculator.xlsx',
-    teaser: 'Calculate potential savings and ROI for your organization. Includes time savings, cost analysis, and business case templates.',
-    category: 'Business Case',
-    isGated: true,
-    icon: FileSpreadsheet,
-    color: 'bg-purple-100 text-purple-800'
-  },
-  {
-    slug: 'outlook-superprompts',
-    title: 'Outlook Email Triage Superprompts',
-    format: 'DOCX',
-    download_path: '/elevatecopilot_resources_detailed/outlook-superprompts.docx',
-    teaser: 'Master email management with AI. 25 proven prompts for drafting, summarizing, and organizing your inbox.',
-    category: 'Email Productivity',
-    isGated: false,
-    icon: FileText,
-    color: 'bg-orange-100 text-orange-800'
-  },
-  {
-    slug: 'exec-brief',
-    title: 'Executive Brief: AI at Work Evidence',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/executive-brief.pdf',
-    teaser: 'Data-driven insights for leadership. ROI evidence, productivity gains, and competitive advantages of AI adoption.',
-    category: 'Leadership',
-    isGated: true,
-    icon: FileText,
-    color: 'bg-red-100 text-red-800'
-  },
-  {
-    slug: 'governance-checklist',
-    title: 'Governance Starter Checklist',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/governance-checklist.pdf',
-    teaser: 'Essential security, compliance, and usage guidelines. Ensure safe and effective AI implementation.',
-    category: 'Governance',
-    isGated: false,
-    icon: FileText,
-    color: 'bg-gray-100 text-gray-800'
-  },
-  {
-    slug: 'prompt-cards',
-    title: 'Prompt Patterns Card Set',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/prompt-cards.pdf',
-    teaser: '50+ proven prompt patterns for common work tasks. Print, laminate, and keep at your desk for quick reference.',
-    category: 'Skills',
-    isGated: false,
-    icon: FileCode,
-    color: 'bg-indigo-100 text-indigo-800'
-  },
-  {
-    slug: 'excel-recipes',
-    title: 'Excel with Copilot: 5 Recipes',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/excel-recipes.pdf',
-    teaser: 'Master data analysis with AI assistance. Formulas, charts, and insights generation made simple.',
-    category: 'Data Analysis',
-    isGated: false,
-    icon: FileSpreadsheet,
-    color: 'bg-emerald-100 text-emerald-800'
-  },
-  {
-    slug: 'ppt-templates',
-    title: 'PowerPoint Accelerator Templates',
-    format: 'PPTX',
-    download_path: '/elevatecopilot_resources_detailed/ppt-templates.pptx',
-    teaser: 'Professional presentation templates optimized for Copilot. Includes AI-friendly layouts and design elements.',
-    category: 'Presentations',
-    isGated: true,
-    icon: FileImage,
-    color: 'bg-pink-100 text-pink-800'
-  },
-  {
-    slug: 'adoption-sprint',
-    title: '30-Day Adoption Sprint Plan',
-    format: 'PDF',
-    download_path: '/elevatecopilot_resources_detailed/adoption-sprint.pdf',
-    teaser: 'Accelerate team adoption with this structured 30-day plan. Daily activities, milestones, and success metrics.',
-    category: 'Adoption',
-    isGated: true,
-    icon: FileText,
-    color: 'bg-yellow-100 text-yellow-800'
-  }
-]
-
-const categories = ['All', 'Getting Started', 'Productivity', 'Business Case', 'Email Productivity', 'Leadership', 'Governance', 'Skills', 'Data Analysis', 'Presentations', 'Adoption']
 
 export default function ResourcesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary to-primary/90 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <Link
-              href="/"
-              className="flex items-center text-gray-200 hover:text-white transition-colors mr-6"
+    <div className="container mx-auto max-w-4xl py-10 px-4">
+      <div className="prose prose-lg max-w-none">
+        <h1 className="text-4xl font-bold mb-6">Open Resource Library</h1>
+        <p className="text-lg mb-6">Download and share freely with attribution.</p>
+        
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="border rounded-lg p-6 bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-3">Starter Pack</h3>
+            <p className="text-gray-600 mb-4">Copilot prompts for professionals (PDF)</p>
+            <a 
+              href="/elevatecopilot_resources_detailed/prompt-cards.pdf" 
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+              download
             >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Home
-            </Link>
+              Download PDF
+            </a>
           </div>
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-playfair">
-              Resource Library
-            </h1>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-              Download free resources, templates, and tools to accelerate your Microsoft Copilot adoption and productivity gains
-            </p>
+          
+          <div className="border rounded-lg p-6 bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-3">Meeting Notes → Actions</h3>
+            <p className="text-gray-600 mb-4">Checklist for converting meetings to actionable items (PDF)</p>
+            <a 
+              href="/elevatecopilot_resources_detailed/meeting-to-deck-cheatsheet.pdf" 
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+              download
+            >
+              Download PDF
+            </a>
           </div>
-        </div>
-      </section>
-
-      {/* Resources Grid */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Filter */}
-          <div className="mb-12">
-            <div className="flex flex-wrap gap-3 justify-center">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className="px-4 py-2 rounded-full bg-white shadow-sm hover:shadow-md transition-shadow text-sm font-medium text-gray-700 hover:text-primary"
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+          
+          <div className="border rounded-lg p-6 bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-3">Excel Analysis Prompts</h3>
+            <p className="text-gray-600 mb-4">Ready-to-use prompts for data analysis (PDF)</p>
+            <a 
+              href="/elevatecopilot_resources_detailed/excel-recipes.pdf" 
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+              download
+            >
+              Download PDF
+            </a>
           </div>
-
-          {/* Resources Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {resources.map((resource) => (
-              <div key={resource.slug} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                {/* Resource Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg ${resource.color}`}>
-                      <resource.icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-xs text-muted uppercase tracking-wide">{resource.category}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {resource.isGated ? (
-                      <Lock className="h-4 w-4 text-gray-400" />
-                    ) : (
-                      <Unlock className="h-4 w-4 text-green-500" />
-                    )}
-                    <span className="text-xs text-muted">{resource.format}</span>
-                  </div>
-                </div>
-
-                {/* Resource Title */}
-                <h3 className="text-lg font-bold text-primary mb-3 font-playfair">
-                  {resource.title}
-                </h3>
-
-                {/* Resource Teaser */}
-                <p className="text-muted text-sm leading-relaxed mb-6">
-                  {resource.teaser}
-                </p>
-
-                {/* Download Button */}
-                <div className="flex items-center justify-between">
-                  {resource.isGated ? (
-                    <Link
-                      href="/contact"
-                      className="flex items-center px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors text-sm font-medium"
-                    >
-                      <Lock className="h-4 w-4 mr-2" />
-                      Get Access
-                    </Link>
-                  ) : (
-                    <a
-                      href={resource.download_path}
-                      download
-                      className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Download
-                    </a>
-                  )}
-                  
-                  <div className="text-xs text-muted">
-                    {resource.isGated ? 'Contact us to unlock' : 'Instant download'}
-                  </div>
-                </div>
-              </div>
-            ))}
+          
+          <div className="border rounded-lg p-6 bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-3">PowerPoint Templates</h3>
+            <p className="text-gray-600 mb-4">Story templates for presentations (PPTX)</p>
+            <a 
+              href="/elevatecopilot_resources_detailed/ppt-templates.pptx" 
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+              download
+            >
+              Download PPTX
+            </a>
           </div>
-
-          {/* CTA Section */}
-          <div className="mt-20 text-center">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-primary mb-4">
-                Ready to Take Your Skills to the Next Level?
-              </h2>
-              <p className="text-muted mb-6 max-w-2xl mx-auto">
-                These resources are just the beginning. Our comprehensive training programs help teams achieve measurable productivity gains and ROI with Microsoft Copilot.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/courses"
-                  className="btn-primary px-8 py-3"
-                >
-                  Explore Training Programs
-                </Link>
-                <Link
-                  href="/corporate-training"
-                  className="btn-secondary px-8 py-3"
-                >
-                  Corporate Training
-                </Link>
-              </div>
-            </div>
+          
+          <div className="border rounded-lg p-6 bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-3">Responsible AI Guide</h3>
+            <p className="text-gray-600 mb-4">Quick guide to ethical AI use (PDF)</p>
+            <a 
+              href="/elevatecopilot_resources_detailed/governance-checklist.pdf" 
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+              download
+            >
+              Download PDF
+            </a>
+          </div>
+          
+          <div className="border rounded-lg p-6 bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-3">Executive Brief</h3>
+            <p className="text-gray-600 mb-4">ROI calculator and adoption guide (PDF)</p>
+            <a 
+              href="/elevatecopilot_resources_detailed/executive-brief.pdf" 
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+              download
+            >
+              Download PDF
+            </a>
           </div>
         </div>
-      </section>
+        
+        <div className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-6">
+          <p className="text-amber-800">
+            Don't see a template you need? Email <a href="mailto:elevatecopilot@outlook.com" className="font-semibold underline">elevatecopilot@outlook.com</a>.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

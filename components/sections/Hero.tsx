@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle, Star } from 'lucide-react'
+import { IS_MISSION } from '@/lib/mode'
 
 const Hero = () => {
   const [isHovered, setIsHovered] = useState(false)
@@ -22,42 +23,66 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                Master Microsoft Copilot
+                {IS_MISSION ? 'AI Literacy for New Zealand — Free, Fortnightly' : 'Master Microsoft Copilot'}
               </h1>
               <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
-                Premium training & certification for professionals and teams worldwide.
+                {IS_MISSION 
+                  ? 'ElevateCopilot is now an open mission: help 1,000 professionals master practical AI skills and pass them on to 10 others each. Join our live sessions, access resources, and be part of NZ\'s productivity leap.'
+                  : 'Premium training & certification for professionals and teams worldwide.'
+                }
               </p>
             </div>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/courses"
+                href={IS_MISSION ? "/events" : "/courses"}
                 className="bg-accent hover:bg-accent/90 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center justify-center group"
               >
-                Join a Live Session
+                {IS_MISSION ? 'Join the Next Live Session (Free)' : 'Join a Live Session'}
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="/corporate-training"
+                href={IS_MISSION ? "/mission" : "/corporate-training"}
                 className="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 font-semibold py-4 px-8 rounded-lg transition-all duration-200 backdrop-blur-sm"
               >
-                Corporate Training
+                {IS_MISSION ? 'Our Mission & Impact' : 'Corporate Training'}
               </Link>
             </div>
 
             {/* Trust Indicators */}
             <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-accent" />
-                  <span className="text-sm font-medium">Global First Copilot Academy</span>
+              {IS_MISSION ? (
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle className="h-5 w-5 text-accent" />
+                    <span className="text-sm font-medium">Community-first</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Star className="h-5 w-5 text-accent" />
+                    <span className="text-sm font-medium">Hands-on demos</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle className="h-5 w-5 text-accent" />
+                    <span className="text-sm font-medium">Open resources</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Star className="h-5 w-5 text-accent" />
+                    <span className="text-sm font-medium">No sales pitch</span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Star className="h-5 w-5 text-accent" />
-                  <span className="text-sm font-medium">Industry Recognized</span>
+              ) : (
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle className="h-5 w-5 text-accent" />
+                    <span className="text-sm font-medium">Global First Copilot Academy</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Star className="h-5 w-5 text-accent" />
+                    <span className="text-sm font-medium">Industry Recognized</span>
+                  </div>
                 </div>
-              </div>
+              )}
               
               <div className="flex items-center space-x-6">
                 <div className="text-center">

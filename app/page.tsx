@@ -7,22 +7,23 @@ import Partnerships from '@/components/sections/Partnerships'
 import TrustSection from '@/components/sections/TrustSection'
 import Testimonials from '@/components/sections/Testimonials'
 import FinalCTA from '@/components/sections/FinalCTA'
+import Impact from '@/components/Impact'
 
 export const metadata: Metadata = {
-  title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
-  description: 'Premium training & certification for professionals and teams worldwide. Master Microsoft Copilot with expert-led sessions and hands-on practice.',
-  keywords: ['Microsoft Copilot', 'AI training', 'productivity training', 'certification', 'corporate training'],
+  title: 'ElevateCopilot — AI Literacy for New Zealand (Free, Fortnightly)',
+  description: 'Open mission to train 1,000 professionals in NZ on practical, responsible AI. Free live sessions, resources, and community. Join and pass it on.',
+  keywords: ['AI literacy', 'Microsoft Copilot', 'New Zealand', 'free training', 'AI education', 'community'],
   openGraph: {
-    title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
-    description: 'Premium training & certification for professionals and teams worldwide.',
+    title: 'ElevateCopilot — AI Literacy for New Zealand (Free, Fortnightly)',
+    description: 'Open mission to train 1,000 professionals in NZ on practical, responsible AI. Free live sessions, resources, and community.',
     url: 'https://www.elevatecopilot.com',
     siteName: 'ElevateCopilot',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ElevateCopilot - Learn Copilot. Lead with AI.',
-    description: 'Premium Microsoft Copilot training & certification for professionals and teams worldwide.',
+    title: 'ElevateCopilot — AI Literacy for New Zealand (Free, Fortnightly)',
+    description: 'Open mission to train 1,000 professionals in NZ on practical, responsible AI. Free live sessions, resources, and community.',
   },
 }
 
@@ -38,6 +39,7 @@ export default async function Home() {
   return (
     <main>
       <Hero />
+      <Impact />
       <ValueProposition />
       <Offerings featuredCourses={[]} />
       <Certification />

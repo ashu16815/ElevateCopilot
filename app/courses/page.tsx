@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Clock, Users, Award, Building } from 'lucide-react'
 import { getAllCourses } from '@/lib/database/db'
+import { IS_MISSION } from '@/lib/mode'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Training Courses - ElevateCopilot',
@@ -10,6 +12,10 @@ export const metadata: Metadata = {
 }
 
 export default async function CoursesPage() {
+  if (IS_MISSION) {
+    redirect('/events')
+  }
+  
   const courses = await getAllCourses()
 
   return (

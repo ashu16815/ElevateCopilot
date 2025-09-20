@@ -3,20 +3,31 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { IS_MISSION } from '@/lib/mode'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Courses', href: '/courses' },
-  { name: 'Corporate Training', href: '/corporate-training' },
-  { name: 'Certification', href: '/certification' },
-  { name: 'Resources', href: '/resources' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Referrals', href: '/referrals' },
-  { name: 'Contact', href: '/contact' },
-]
+  const navigation = IS_MISSION ? [
+    { name: 'Home', href: '/' },
+    { name: 'Learn Live (Free)', href: '/events' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'Impact', href: '/impact' },
+    { name: 'Ambassadors', href: '/ambassadors' },
+    { name: 'Mission', href: '/mission' },
+    { name: 'Press', href: '/press' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contact', href: '/contact' },
+  ] : [
+    { name: 'Home', href: '/' },
+    { name: 'Courses', href: '/courses' },
+    { name: 'Corporate Training', href: '/corporate-training' },
+    { name: 'Certification', href: '/certification' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Referrals', href: '/referrals' },
+    { name: 'Contact', href: '/contact' },
+  ]
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
@@ -50,10 +61,10 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Link
-              href="/courses"
+              href={IS_MISSION ? "/events" : "/courses"}
               className="btn-primary"
             >
-              Join a Live Session
+              {IS_MISSION ? "Join a Live Session" : "Join a Live Session"}
             </Link>
           </div>
 
@@ -85,11 +96,11 @@ const Header = () => {
             ))}
             <div className="pt-4">
               <Link
-                href="/courses"
+                href={IS_MISSION ? "/events" : "/courses"}
                 className="btn-primary block text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Join a Live Session
+                {IS_MISSION ? "Join a Live Session" : "Join a Live Session"}
               </Link>
             </div>
           </div>
