@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
-import { IS_MISSION } from '@/lib/mode'
+import UserMenu from '@/components/UserMenu'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -15,8 +15,7 @@ const Header = () => {
     { name: 'Impact', href: '/impact' },
     { name: 'Mission', href: '/mission' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Founder', href: '/founder' },
-    { name: 'Sign in', href: '/auth' }
+    { name: 'Founder', href: '/founder' }
   ]
 
   return (
@@ -36,7 +35,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-8 items-center">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -46,6 +45,7 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            <UserMenu />
           </nav>
 
 
@@ -75,6 +75,9 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="px-3 py-2">
+              <UserMenu />
+            </div>
           </div>
         </div>
       )}

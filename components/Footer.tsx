@@ -24,7 +24,7 @@ const Footer = () => {
   ]
 
   const socialLinks = [
-    { name: 'LinkedIn', href: '#', icon: Linkedin },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/elevatecopilot/', icon: Linkedin },
     { name: 'YouTube', href: '#', icon: Youtube },
   ]
 
