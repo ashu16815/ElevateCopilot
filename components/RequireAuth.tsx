@@ -15,7 +15,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
           </p>
           <a 
             href="/auth" 
-            className="mt-3 inline-block px-4 py-2 rounded-md bg-amber-600 text-white hover:bg-amber-700"
+            className="mt-3 inline-block ec-btn ec-btn-primary"
           >
             Sign in
           </a>
