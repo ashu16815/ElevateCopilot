@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 
 export default function DebugAuth() {
   const [status, setStatus] = useState('Testing...');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   const testConnection = async () => {
     try {
