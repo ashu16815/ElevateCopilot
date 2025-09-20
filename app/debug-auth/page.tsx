@@ -32,7 +32,7 @@ export default function DebugAuth() {
       }
       
     } catch (err) {
-      setStatus(`Error: ${err.message}`);
+      setStatus(`Error: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 
@@ -54,7 +54,7 @@ export default function DebugAuth() {
       }
       
     } catch (err) {
-      setStatus(`Magic link error: ${err.message}`);
+      setStatus(`Magic link error: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 
