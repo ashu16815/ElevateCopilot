@@ -53,8 +53,8 @@ export default function Mission() {
             <div className="space-y-6">
               {whyMatters.map((point, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                    <span className="text-amber-600 font-bold text-sm">{index + 1}</span>
+                  <div className="flex-shrink-0 w-8 h-8 bg-[var(--ec-gold)] bg-opacity-20 rounded-full flex items-center justify-center">
+                    <span className="text-[var(--ec-gold)] font-bold text-sm">{index + 1}</span>
                   </div>
                   <p className="text-gray-700">{point}</p>
                 </div>
@@ -81,8 +81,8 @@ export default function Mission() {
                   <span className="font-semibold">12%</span>
                 </div>
               </div>
-              <div className="mt-6 p-4 bg-amber-50 rounded-lg">
-                <p className="text-sm font-medium text-amber-800">
+              <div className="mt-6 p-4 bg-[var(--ec-gold)] bg-opacity-10 rounded-lg">
+                <p className="text-sm font-medium text-[var(--ec-text)]">
                   "We're bridging this gap with free, practical training that anyone can access."
                 </p>
               </div>
@@ -150,7 +150,7 @@ export default function Mission() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-12 h-12 bg-[var(--ec-gold)] rounded-full flex items-center justify-center text-white font-bold">
                   1
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export default function Mission() {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-12 h-12 bg-[var(--ec-gold)] rounded-full flex items-center justify-center text-white font-bold">
                   2
                 </div>
                 <div>
@@ -170,7 +170,7 @@ export default function Mission() {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-12 h-12 bg-[var(--ec-gold)] rounded-full flex items-center justify-center text-white font-bold">
                   3
                 </div>
                 <div>
