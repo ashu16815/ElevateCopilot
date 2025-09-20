@@ -24,6 +24,14 @@ export default function Auth() {
     setLoading(true);
     setMsg(''); // Clear previous messages
     
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setMsg('Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
+    
     try {
       console.log('Sending magic link to:', email);
       console.log('Redirect URL:', window.location.origin + '/auth/callback');
@@ -39,9 +47,13 @@ export default function Auth() {
       
       if (error) {
         console.error('Auth error:', error);
-        setMsg(`Error: ${error.message}`);
+        if (error.message.includes('email_address_invalid')) {
+          setMsg('Please enter a valid email address. Some email providers may not be supported.');
+        } else {
+          setMsg(`Error: ${error.message}`);
+        }
       } else {
-        setMsg('Check your email for a magic link. If you don\'t see it, check your spam folder.');
+        setMsg('✅ Magic link sent! Check your email and click the link to sign in. If you don\'t see it, check your spam folder.');
       }
     } catch (err) {
       console.error('Unexpected error:', err);
@@ -70,6 +82,9 @@ export default function Auth() {
             <h2 className="text-2xl font-bold mb-6 text-center">Sign in / Sign up</h2>
             <p className="text-gray-600 mb-6 text-center">
               Use your email — we'll send a magic link.
+            </p>
+            <p className="text-sm text-gray-500 mb-4 text-center">
+              Note: Some email providers may not be supported. Try using a work email or Gmail.
             </p>
             
             <form onSubmit={(e) => { e.preventDefault(); send(); }} className="space-y-6">
