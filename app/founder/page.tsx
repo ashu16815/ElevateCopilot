@@ -48,7 +48,7 @@ export default function Founder() {
                   <span className="text-4xl font-bold text-white">AG</span>
                 </div>
                 <h2 className="text-2xl font-bold mb-2">Ankit Gupta</h2>
-                <p className="text-amber-600 font-semibold mb-4">Founder & CEO</p>
+                <p className="text-amber-600 font-semibold mb-4">Founder</p>
                 <p className="text-sm text-gray-600 mb-6">
                   Digital transformation leader with a passion for making AI accessible to every professional in New Zealand.
                 </p>
@@ -98,14 +98,6 @@ export default function Founder() {
                   </ul>
                 </div>
 
-                <div className="ec-card p-6 bg-amber-50">
-                  <h3 className="text-xl font-semibold mb-3 text-amber-800">Leadership Vision</h3>
-                  <p className="text-amber-700">
-                    I aspire to serve as a <strong>CIO/CDO</strong> in the region, contributing to national capability, 
-                    policy alignment, and workforce uplift. ElevateCopilot is both a mission and a stepping stone toward 
-                    broader impact on New Zealand's digital future.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
