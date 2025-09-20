@@ -1,25 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { useSearchParams } from 'next/navigation';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+
+  // Handle error messages from callback
+  useEffect(() => {
+    const error = searchParams.get('error');
+    const message = searchParams.get('message');
+    
+    if (error) {
+      setMsg(`Authentication failed: ${message || error}`);
+    }
+  }, [searchParams]);
 
   async function send() {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: typeof window !== 'undefined' 
-          ? window.location.origin + '/auth/callback' 
-          : undefined
+    setMsg(''); // Clear previous messages
+    
+    try {
+      console.log('Sending magic link to:', email);
+      console.log('Redirect URL:', window.location.origin + '/auth/callback');
+      
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: window.location.origin + '/auth/callback'
+        }
+      });
+      
+      console.log('Supabase response:', { data, error });
+      
+      if (error) {
+        console.error('Auth error:', error);
+        setMsg(`Error: ${error.message}`);
+      } else {
+        setMsg('Check your email for a magic link. If you don\'t see it, check your spam folder.');
       }
-    });
-    setLoading(false);
-    setMsg(error ? error.message : 'Check your email for a magic link.');
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      setMsg('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
